@@ -1,0 +1,272 @@
+/* ============================================================
+   Identidade Visual — V4 Company | Carvalho & Co
+   Tokens CSS. Cole no <style> da peça ou importe como arquivo.
+   Padrão: fundo branco, preto no texto, vermelho como acento.
+   ============================================================ */
+
+:root {
+  /* --- Fundo claro (padrão de toda peça de conteúdo) --- */
+  --v4-branco:          #FFFFFF;
+  --v4-preto:           #111111;
+  --v4-vermelho:        #C00000;
+  --v4-vermelho-escuro: #A30400;
+  --v4-vinho:           #6B0000;
+
+  --v4-cinza-escuro:    #595959;  /* subtítulo, texto secundário   */
+  --v4-cinza-medio:     #737373;  /* eixo, label, metadado         */
+  --v4-cinza-claro:     #8C8C8C;  /* não textual: gridline, ícone  */
+  --v4-borda:           #D9D9D9;
+  --v4-card:            #F5F5F5;
+
+  /* --- Semânticas --- */
+  --v4-positivo:        #177230;
+  --v4-negativo:        #C00000;
+  --v4-atencao:         #A35F00;
+  --v4-neutro:          #595959;
+
+  /* --- Tintas de superfície --- */
+  --v4-tinta-positiva:  #E6F4EA;
+  --v4-tinta-negativa:  #FFF5F5;
+  --v4-tinta-atencao:   #FFF8E1;
+  --v4-tinta-neutra:    #F0F0F0;
+
+  /* --- Fundo escuro (capa, separador, encerramento, impacto) --- */
+  --v4-dark-bg:         #0A0A0A;
+  --v4-dark-surface:    #141414;
+  --v4-dark-divisor:    #1C1C1C;
+  --v4-racing:          #E10600;  /* acento em fundo escuro        */
+  --v4-racing-claro:    #FF4A45;  /* vermelho legível em corpo     */
+  --v4-dark-texto-2:    #B8B8B8;
+  --v4-dark-texto-3:    #9A9A9A;
+  --v4-dark-positivo:   #19C37D;
+  --v4-dark-atencao:    #FFB020;
+  --v4-dark-borda:      rgba(255,255,255,.08);
+  --v4-dark-borda-2:    rgba(255,255,255,.16);
+
+  /* --- Data viz: série destacada + neutros (padrão recomendado) --- */
+  --v4-serie-destaque:  #C00000;
+  --v4-serie-n1:        #111111;
+  --v4-serie-n2:        #595959;
+  --v4-serie-n3:        #8C8C8C;
+  --v4-serie-n4:        #C4C4C4;
+
+  /* --- Data viz: categórica estendida (use só com 4+ categorias reais) --- */
+  --v4-cat-1: #C00000;
+  --v4-cat-2: #111111;
+  --v4-cat-3: #0F6E7A;
+  --v4-cat-4: #A35F00;
+  --v4-cat-5: #5B3A8E;
+  --v4-cat-6: #177230;
+
+  /* --- Data viz: sequencial vermelho (baixo -> alto) --- */
+  --v4-seq-1: #FFF0F0;
+  --v4-seq-2: #F8C9C9;
+  --v4-seq-3: #E88585;
+  --v4-seq-4: #D13A3A;
+  --v4-seq-5: #C00000;
+  --v4-seq-6: #6B0000;
+
+  /* --- Data viz: divergente (negativo <- neutro -> positivo) --- */
+  --v4-div-neg-2: #C00000;
+  --v4-div-neg-1: #E88585;
+  --v4-div-zero:  #E8E8E8;
+  --v4-div-pos-1: #7FBF92;
+  --v4-div-pos-2: #177230;
+
+  /* --- Tipografia --- */
+  --v4-font-display: 'Bebas Neue', 'Oswald', Impact, sans-serif;
+  --v4-font-texto:   'Inter', -apple-system, 'Segoe UI', Arial, sans-serif;
+  --v4-font-tecnica: 'Space Grotesk', 'SF Mono', Consolas, monospace;
+
+  /* --- Espaçamento (base 8) --- */
+  --v4-sp-1:  8px;
+  --v4-sp-2:  16px;
+  --v4-sp-3:  24px;
+  --v4-sp-4:  32px;
+  --v4-sp-6:  48px;
+  --v4-sp-8:  64px;
+  --v4-sp-12: 96px;
+
+  /* --- Forma --- */
+  --v4-raio-card:   8px;
+  --v4-raio-badge:  4px;
+  --v4-acento-w:    4px;   /* borda vertical esquerda de acento */
+  --v4-shadow-sm:   0 1px 2px rgba(17,17,17,.06);
+  --v4-shadow-md:   0 2px 8px rgba(17,17,17,.08);
+
+  /* --- Movimento --- */
+  --v4-t-rapido: 150ms cubic-bezier(.4,0,.2,1);
+  --v4-t-entrada: 400ms cubic-bezier(.16,1,.3,1);
+  --v4-t-secao:  600ms cubic-bezier(.16,1,.3,1);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+
+body {
+  background: var(--v4-branco);
+  color: var(--v4-preto);
+  font-family: var(--v4-font-texto);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { line-height: 1.2; letter-spacing: -.01em; margin: 0 0 var(--v4-sp-2); }
+h1 { font-size: clamp(40px, 6vw, 84px); font-weight: 900; }
+h2 { font-size: clamp(28px, 4vw, 56px); font-weight: 800; }
+h3 { font-size: clamp(20px, 2vw, 28px); font-weight: 700; }
+
+/* Eyebrow / label técnico — o único lugar de caixa alta */
+.v4-eyebrow {
+  font-family: var(--v4-font-tecnica);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  color: var(--v4-vermelho);
+}
+
+/* Régua de seção sob o eyebrow */
+.v4-regua {
+  height: 2px;
+  background: var(--v4-vermelho);
+  border: 0;
+  margin: var(--v4-sp-1) 0 var(--v4-sp-3);
+}
+
+.v4-subtitulo { color: var(--v4-cinza-escuro); font-size: 17px; }
+
+/* ============================================================
+   Componentes
+   ============================================================ */
+
+.v4-card {
+  background: var(--v4-card);
+  border-radius: var(--v4-raio-card);
+  border-left: var(--v4-acento-w) solid var(--v4-borda);
+  padding: var(--v4-sp-3);
+}
+.v4-card--destaque { border-left-color: var(--v4-vermelho); }
+.v4-card--negativo {
+  background: var(--v4-tinta-negativa);
+  border-left-color: var(--v4-vermelho);
+}
+
+.v4-bloco {
+  border-left: var(--v4-acento-w) solid var(--v4-vermelho);
+  padding-left: var(--v4-sp-2);
+  margin-bottom: var(--v4-sp-3);
+}
+
+.v4-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--v4-raio-badge);
+  font-family: var(--v4-font-tecnica);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.v4-badge--positivo { background: var(--v4-tinta-positiva); color: var(--v4-positivo); }
+.v4-badge--negativo { background: var(--v4-tinta-negativa); color: var(--v4-negativo); }
+.v4-badge--atencao  { background: var(--v4-tinta-atencao);  color: var(--v4-atencao); }
+.v4-badge--neutro   { background: var(--v4-tinta-neutra);   color: var(--v4-neutro); }
+
+.v4-kpi-valor {
+  font-family: var(--v4-font-display);
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 1;
+  color: var(--v4-preto);
+  font-variant-numeric: tabular-nums;
+}
+.v4-kpi-valor--destaque { color: var(--v4-vermelho); }
+
+/* Use em linha de 3 ou 4 tiles: escala menor para o número não quebrar.
+   Bebas Neue é condensada; sem ela o fallback do sistema ocupa mais largura. */
+.v4-kpi-valor--tile {
+  font-size: clamp(34px, 4vw, 64px);
+  white-space: nowrap;
+}
+
+.v4-kpi-label {
+  font-family: var(--v4-font-tecnica);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  color: var(--v4-cinza-medio);
+}
+
+.v4-cta {
+  display: inline-block;
+  background: var(--v4-vermelho);
+  color: var(--v4-branco);      /* nunca preto sobre vermelho */
+  padding: 14px 28px;
+  border-radius: var(--v4-raio-badge);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background var(--v4-t-rapido);
+}
+.v4-cta:hover  { background: var(--v4-vermelho-escuro); }
+.v4-cta:focus-visible { outline: 3px solid var(--v4-preto); outline-offset: 2px; }
+
+/* Tabela — envolva SEMPRE em .v4-tabela-wrap.
+   A tabela rola dentro do próprio contêiner; a página nunca rola na horizontal. */
+.v4-tabela-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.v4-tabela { width: 100%; border-collapse: collapse; font-size: 15px; }
+.v4-tabela thead th {
+  background: var(--v4-preto);
+  color: var(--v4-branco);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-align: left;
+  padding: 12px var(--v4-sp-2);
+}
+.v4-tabela td { padding: 12px var(--v4-sp-2); border-bottom: 1px solid var(--v4-borda); }
+.v4-tabela tbody tr:nth-child(even) { background: var(--v4-card); }
+.v4-tabela tr.is-destaque { background: var(--v4-tinta-negativa); }
+.v4-tabela .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   Seção escura — só capa, separador, encerramento, impacto
+   ============================================================ */
+
+.v4-dark {
+  background: var(--v4-dark-bg);
+  color: var(--v4-branco);
+}
+.v4-dark .v4-eyebrow    { color: var(--v4-racing); }
+.v4-dark .v4-regua      { background: var(--v4-racing); }
+.v4-dark .v4-subtitulo  { color: var(--v4-dark-texto-2); }
+.v4-dark .v4-kpi-label  { color: var(--v4-dark-texto-3); }
+.v4-dark .v4-card {
+  background: var(--v4-dark-surface);
+  border-left-color: var(--v4-dark-borda-2);
+}
+.v4-dark .v4-titulo-display {
+  font-family: var(--v4-font-display);
+  /* mínimo em 44px: sem Bebas Neue, o fallback é mais largo e estoura em 320px */
+  font-size: clamp(44px, 13vw, 220px);
+  line-height: .9;
+}
+
+/* ============================================================
+   Acessibilidade
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:where(a, button, [tabindex]):focus-visible {
+  outline: 3px solid var(--v4-vermelho);
+  outline-offset: 2px;
+}
