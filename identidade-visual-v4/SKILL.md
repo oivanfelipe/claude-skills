@@ -38,17 +38,43 @@ paletas próprias.
 
 ## Quando ativar
 
-Ative quando o pedido contiver qualquer variação de "identidade visual da V4",
-"padrão V4", "cores da V4", "com a cara da V4" — **ou** quando o usuário pedir
-uma peça de comunicação da V4 / Carvalho & Co sem especificar estilo.
+Esta skill é o **padrão de toda entrega em nome da V4**. Não espere o usuário
+pedir a identidade visual — se a peça leva a marca da V4, o padrão é este.
 
-Ative também, sem o usuário pedir explicitamente, quando estiver gerando uma
-entrega para cliente em nome da V4: proposta, diagnóstico, relatório mensal,
-deck de planejamento, dashboard de performance.
+Ative quando:
 
-**Não ative** para: código de aplicação sem interface, scripts, análises de dados
-sem entrega visual, ou quando o usuário pedir a identidade visual **do cliente**
-(nesse caso a marca do cliente prevalece — veja "Co-branding" abaixo).
+- O pedido contiver qualquer variação de "identidade visual da V4", "padrão V4",
+  "cores da V4", "com a cara da V4".
+- O usuário pedir apresentação, deck, documento, proposta, relatório,
+  diagnóstico, dashboard, gráfico ou página em nome da V4 / Carvalho & Co, sem
+  especificar estilo.
+- Outra skill V4 (`criar-apresentacao`, `monthly-traffic-deck`,
+  `doutor-carvalho`, `argus`, `scope-auditor`, `planejamento-estrategico`)
+  estiver gerando a peça.
+
+Carregue antes de escrever a primeira linha da peça, não depois de montada —
+retrofitar identidade em layout pronto quase sempre sai pior.
+
+**Não ative** para: código de aplicação sem interface, scripts e análise de dados
+sem entrega visual.
+
+## Precedência
+
+Quando houver conflito, resolva nesta ordem:
+
+1. **Instrução explícita do usuário na conversa.** Vale só para aquela peça.
+2. **Marca do cliente**, quando a entrega é assinada pelo cliente e não pela V4.
+   A paleta do cliente substitui o vermelho V4 como acento — mas a estrutura
+   desta skill permanece: fundo branco, alinhamento rigoroso, um destaque por
+   tela, conclusão por bloco.
+3. **Esta skill.**
+4. Paleta ou token definido dentro de outra skill.
+
+O item 4 existe porque as demais skills V4 trazem paletas próprias, escritas
+antes desta existir. Onde divergirem, esta ganha — é a única versão validada
+contra WCAG. A divergência conhecida é o verde semântico: elas usam `#1B7F37`,
+que mede 4,47:1 sobre a tinta clara e reprova por pouco; o valor correto é
+`#177230`.
 
 ## Regra número um: o branco é o padrão
 
@@ -148,6 +174,10 @@ Arquivos prontos para copiar:
 - `assets/v4-tokens.css` — custom properties para qualquer peça web/HTML.
 - `assets/v4-tokens.json` — mesmos tokens para consumo programático
   (pptxgenjs, python-docx, matplotlib, scripts de build).
+- `assets/exemplo.html` — a identidade renderizada, com todos os componentes.
+  Abra no navegador; serve de referência de implementação.
+
+Instalação no PC e na nuvem: `INSTALACAO.md`.
 
 ## Assinatura de marca
 
