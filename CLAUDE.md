@@ -134,13 +134,18 @@ python3 identidade-visual-v4/scripts/validar-contraste.py "#C00000" "#FFFFFF"
 
 ## Escopo destas instruções
 
-Este arquivo governa as sessões abertas **dentro deste repositório**. Para as
-duas regras acima — varredura de skills e identidade visual da V4 — valerem em
-qualquer projeto do seu PC, copie-as para `~/.claude/CLAUDE.md`:
+Este arquivo governa as sessões abertas **dentro deste repositório**.
 
-```bash
-cat ~/.agents/skills/CLAUDE.md >> ~/.claude/CLAUDE.md
-```
+As duas regras acima — varredura de skills e identidade visual da V4 — também
+valem para qualquer projeto do PC, porque estão replicadas no `CLAUDE.md` global,
+que fica em [`oivanfelipe/claude-config`](https://github.com/oivanfelipe/claude-config)
+e é linkado em `~/.claude/CLAUDE.md`. Lá elas entram como subseções das seções 2
+(Princípios Gerais) e 10 (Design e Comunicação Visual).
+
+Ao mudar uma dessas duas regras aqui, mude também lá — são cópias, não um
+arquivo compartilhado. Não use `cat >> ~/.claude/CLAUDE.md`: aquele caminho é um
+symlink para o `claude-config`, e o comando despejaria neste arquivo inteiro
+dentro da config global, incluindo as convenções que só valem aqui.
 
 Na nuvem, o equivalente são as Instruções de perfil em claude.ai → Settings →
 Profile.
