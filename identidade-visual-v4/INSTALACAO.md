@@ -16,7 +16,7 @@ comunicam: instalar em um não instala no outro.
 ```bash
 cd ~/.agents/skills
 git pull origin main
-npx skills experimental_sync -y
+bash instalar.sh
 ```
 
 Confirme que apareceu:
@@ -25,14 +25,26 @@ Confirme que apareceu:
 ls -l ~/.claude/skills/identidade-visual-v4
 ```
 
-Se o comando acima não listar nada, crie o link à mão:
-
-```bash
-ln -s ~/.agents/skills/identidade-visual-v4 ~/.claude/skills/identidade-visual-v4
-```
-
 Teste numa sessão nova do Claude Code: peça *"monte um slide com a identidade
 visual da V4"*. Se a skill carregar, ela aparece no rastro da sessão.
+
+### Por que não `npx skills experimental_sync`
+
+Porque ele não funciona para esta skill. O `experimental_sync` só varre
+`node_modules` atrás de `SKILL.md` — ele restaura o que foi instalado via
+`npx skills add`. Skills escritas à mão neste repositório (`identidade-visual-v4`,
+`planejamento-estrategico`) ficam de fora: o comando responde `No skills found`
+e sai sem criar link nenhum, sem erro.
+
+O `instalar.sh` cobre esse caso. Ele cria um symlink em `~/.claude/skills/` para
+cada diretório do repositório que tenha `SKILL.md`, é idempotente e nunca apaga
+diretório real no destino — se já existir uma pasta de verdade com aquele nome,
+ele avisa e pula.
+
+```bash
+bash instalar.sh --dry                  # mostra o que faria, sem escrever
+bash instalar.sh identidade-visual-v4   # instala uma skill só
+```
 
 ### Windows
 

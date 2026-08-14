@@ -52,7 +52,16 @@ cd ~/.agents/skills && git add <skill> && git commit -m "feat: adiciona skill <n
 
 ```bash
 git clone https://github.com/oivanfelipe/claude-skills.git ~/.agents/skills
-cd ~/.agents/skills && npx skills experimental_sync -y
+cd ~/.agents/skills
+npx skills experimental_sync -y   # restaura as skills instaladas via CLI
+bash instalar.sh                  # liga as skills escritas à mão
+```
+
+Os dois comandos são necessários e cobrem conjuntos diferentes. O `experimental_sync` só varre `node_modules`, então restaura o que veio de `npx skills add` — e ignora silenciosamente as skills escritas à mão neste repositório (`identidade-visual-v4`, `planejamento-estrategico`), respondendo `No skills found` sem criar link nenhum. O `instalar.sh` cria um symlink em `~/.claude/skills/` para cada diretório com `SKILL.md`; é idempotente e nunca apaga diretório real no destino.
+
+```bash
+bash instalar.sh --dry     # simula
+bash instalar.sh <nome>    # uma skill só
 ```
 
 ## Escopo: local vs. nuvem
