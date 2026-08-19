@@ -31,7 +31,12 @@ def frontmatter(caminho: str) -> dict:
     for linha in m.group(1).split("\n"):
         achou = re.match(r"^([a-zA-Z_-]+):\s*(.*)$", linha)
         if achou:
-            campos[achou.group(1)] = achou.group(2).strip()
+            valor = achou.group(2).strip()
+            # Escalar YAML pode vir entre aspas — as skills vindas do claude.ai
+            # chegam assim. Remove só quando abre e fecha com a mesma aspa.
+            if len(valor) >= 2 and valor[0] == valor[-1] and valor[0] in "\"'":
+                valor = valor[1:-1]
+            campos[achou.group(1)] = valor
     return campos
 
 
