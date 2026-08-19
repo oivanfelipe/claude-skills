@@ -1,7 +1,44 @@
-# Apresentações — PPTX e deck HTML
+# Apresentações — deck de scroll e PPTX
 
 Aplica-se a slides executivos, decks de diagnóstico, planejamento, pitch e
-check-in mensal. Vale para `pptxgenjs`, `python-pptx` e HTML de scroll vertical.
+check-in mensal.
+
+---
+
+## 0) O formato de entrega: deck de scroll
+
+**O padrão é HTML de scroll vertical, um slide por tela.** Cada slide ocupa a
+altura inteira da janela, encaixa sozinho ao rolar e só se move para baixo. Não
+há navegação lateral, não há setinha para o lado, não há rolagem horizontal em
+lugar nenhum.
+
+O leitor rola. Um slide sai, o próximo entra e para. Sempre um por vez.
+
+Isso vale para toda apresentação da V4, inclusive as geradas por
+`criar-apresentacao`, `monthly-traffic-deck`, `doutor-carvalho`, `argus`,
+`scope-auditor` e `planejamento-estrategico-v4`. Onde essas skills descreverem
+navegação por passador de slides, vale este arquivo.
+
+Ponto de partida pronto: `assets/deck-template.html`. Ele já traz o encaixe, a
+barra de progresso, o contador, a navegação por teclado e os dois tipos de
+slide. Copie e preencha; não recomece do zero.
+
+### Por que scroll e não passador
+
+O deck circula por link. O decisor abre no celular, no meio da reunião ou depois
+dela, e rola com o polegar — não procura seta de navegação. Scroll é o gesto que
+ele já faz em tudo. Um passador de slides transforma leitura em operação de
+interface, e quem abre no celular simplesmente não avança.
+
+### Quando ainda entregar PPTX
+
+Só quando o cliente precisar do **arquivo**: para editar, para reapresentar sem
+você, ou porque o processo interno dele exige anexo em e-mail. Nesse caso,
+entregue os dois — o link do deck de scroll para leitura, o `.pptx` para o
+arquivo. A seção 5 cobre o PPTX.
+
+Não entregue PDF de apresentação como formato principal. Ele perde o encaixe,
+perde qualquer interação e vira um arquivo pesado que ninguém rola até o fim.
 
 ---
 
@@ -155,13 +192,91 @@ e nada além disso.
 
 ---
 
-## 6) Deck HTML — notas de implementação
+## 6) Deck de scroll — implementação
 
-Estrutura: uma seção de `100vh` por slide, scroll vertical, barra de progresso
-no topo, navegação por dots à direita, reveal por `IntersectionObserver`.
+Use `assets/deck-template.html` como base. O que segue explica as decisões dele,
+para você não desfazer sem querer o que faz o encaixe funcionar.
 
-Importe `assets/v4-tokens.css` e use as classes `.v4-card`, `.v4-bloco`,
-`.v4-badge`, `.v4-kpi-valor`, `.v4-tabela`. Seções escuras recebem `.v4-dark`.
+### O encaixe
+
+```css
+.deck {
+  height: 100dvh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;   /* o encaixe é obrigatório, não sugerido */
+  scroll-behavior: smooth;
+}
+.slide {
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;        /* impede pular dois slides num gesto só */
+}
+```
+
+Três detalhes que decidem se funciona:
+
+**`100dvh`, não `100vh`.** No celular, `100vh` conta a janela sem a barra do
+navegador, então o slide fica mais alto que a tela e o encaixe treme a cada
+rolagem. `dvh` acompanha a barra aparecendo e sumindo.
+
+**`scroll-snap-stop: always`.** Sem ele, um gesto rápido no touch atravessa três
+slides. Com ele, cada gesto anda exatamente um.
+
+**O contêiner rola, não o `body`.** O encaixe precisa de um elemento com altura
+fixa e `overflow-y: scroll`. Se você deixar a página inteira rolar, o snap
+funciona em desktop e falha no iOS.
+
+### `min-height`, não `height`
+
+O slide tem altura **mínima** de uma tela, não altura fixa. A diferença aparece
+em celular estreito: com `height`, conteúdo que não cabe fica cortado e
+inacessível; com `min-height`, o slide cresce e o leitor rola dentro dele antes
+de encaixar no próximo.
+
+Isso é a válvula de escape, não a norma. Se um slide cresce no desktop, ele tem
+conteúdo demais — corte, não deixe crescer. A regra continua sendo uma ideia por
+tela.
+
+### Sem rolagem horizontal, nunca
+
+Tabela larga rola dentro do próprio contêiner (`.v4-tabela-wrap`, já em
+`v4-tokens.css`). A página nunca rola na horizontal — verifique em 320px antes
+de entregar.
+
+### Teclado e acessibilidade
+
+Setas, PageUp/PageDown, Home/End e espaço funcionam nativamente quando o
+contêiner tem foco. O template força isso com `tabindex="0"` no contêiner e um
+handler que chama `scrollIntoView` no slide vizinho, porque o comportamento
+nativo varia entre navegadores.
+
+Cada slide é um `<section>` com `aria-label`. A barra de progresso é decorativa
+(`aria-hidden`). Com `prefers-reduced-motion: reduce`, o template desliga
+`scroll-behavior: smooth` — movimento suave longo enjoa quem tem sensibilidade
+vestibular.
+
+### Progresso e contador
+
+Barra de 3px no topo, `#C00000`, largura proporcional à posição. Contador
+discreto no canto (`04 / 18`) em Space Grotesk. Ambos ajudam o leitor a saber
+quanto falta — sem isso, deck longo em scroll parece infinito e a pessoa desiste.
+
+### Reveal
+
+`IntersectionObserver` com `opacity` e `transform: translateY(16px)`, 400ms.
+Só isso. Nada de biblioteca de animação, nada de parallax, nada de efeito que
+dispute com o conteúdo. Elementos com `data-anim` entram; o resto já está lá.
+
+### Impressão
+
+`@media print`: desliga o snap, `height: auto`, `page-break-after: always` por
+slide. Assim o `Ctrl+P` do cliente gera um PDF decente sem você manter uma
+segunda versão.
+
+### Identidade
+
+Importe `assets/v4-tokens.css` e use `.v4-card`, `.v4-bloco`, `.v4-badge`,
+`.v4-kpi-valor`, `.v4-tabela`. Slides escuros recebem `.v4-dark`.
 
 Tipografia web (Bebas Neue + Inter + Space Grotesk) substitui Oswald + Arial.
 A hierarquia é a mesma; só as famílias mudam.

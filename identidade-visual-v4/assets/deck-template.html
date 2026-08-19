@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deck V4 — Carvalho &amp; Co</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="v4-tokens.css">
+<style>
+/* ============================================================
+   Deck de scroll — um slide por tela, só para baixo.
+   O que estiver aqui é estrutura do deck. Cor e tipografia
+   vêm de v4-tokens.css; não redefina paleta neste arquivo.
+   ============================================================ */
+
+html, body { height: 100%; margin: 0; overflow: hidden; }
+
+.deck {
+  height: 100dvh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  outline: none;
+}
+
+.slide {
+  min-height: 100dvh;          /* mínima, não fixa: válvula de escape no celular */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;    /* um gesto = um slide */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(32px, 6vh, 80px) clamp(24px, 5vw, 96px);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.slide__conteudo { width: min(1120px, 100%); margin-inline: auto; }
+
+/* --- Progresso e contador --- */
+.progresso {
+  position: fixed; inset: 0 auto auto 0; height: 3px; width: 0;
+  background: var(--v4-vermelho); z-index: 10; transition: width 120ms linear;
+}
+.contador {
+  position: fixed; right: clamp(16px, 3vw, 32px); bottom: clamp(16px, 3vh, 28px);
+  font-family: var(--v4-font-tecnica); font-size: 12px; font-weight: 700;
+  letter-spacing: .2em; color: var(--v4-cinza-medio); z-index: 10;
+  font-variant-numeric: tabular-nums;
+}
+.v4-dark ~ .contador, .contador.is-dark { color: var(--v4-dark-texto-3); }
+
+/* --- Assinatura --- */
+.assinatura {
+  position: absolute; top: clamp(20px, 4vh, 40px); right: clamp(24px, 5vw, 96px);
+  font-family: var(--v4-font-display); letter-spacing: .06em; font-size: 14px;
+  color: var(--v4-preto);
+}
+.v4-dark .assinatura { top: auto; bottom: clamp(20px, 4vh, 40px); color: var(--v4-branco); }
+.assinatura-cliente {
+  position: absolute; bottom: clamp(20px, 4vh, 40px); left: clamp(24px, 5vw, 96px);
+  font-family: var(--v4-font-display); letter-spacing: .06em; font-size: 14px;
+  color: var(--v4-branco);
+}
+
+/* --- Conclusão estratégica: fecha todo slide claro --- */
+.conclusao { margin-top: var(--v4-sp-4); border-top: 2px solid var(--v4-vermelho); padding-top: var(--v4-sp-2); }
+.conclusao__label {
+  font-family: var(--v4-font-tecnica); font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .2em; color: var(--v4-vermelho);
+}
+
+/* --- Reveal --- */
+[data-anim] { opacity: 0; transform: translateY(16px); transition: opacity 400ms cubic-bezier(.16,1,.3,1), transform 400ms cubic-bezier(.16,1,.3,1); }
+[data-anim].is-in { opacity: 1; transform: none; }
+
+/* --- Grid utilitário --- */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--v4-sp-3); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--v4-sp-3); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--v4-sp-3); }
+@media (max-width: 900px) { .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+/* --- Acessibilidade --- */
+@media (prefers-reduced-motion: reduce) {
+  .deck { scroll-behavior: auto; }
+  [data-anim] { transition: none; opacity: 1; transform: none; }
+}
+
+/* --- Impressão: um slide por página, sem snap --- */
+@media print {
+  html, body { height: auto; overflow: visible; }
+  .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+  .slide { min-height: auto; page-break-after: always; padding: 24px; }
+  .progresso, .contador { display: none; }
+  [data-anim] { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progresso" aria-hidden="true"></div>
+<div class="contador" aria-hidden="true">01 / 05</div>
+
+<div class="deck" tabindex="0" role="region" aria-label="Apresentação">
+
+  <!-- ===== CAPA — escuro, uma frase, nada mais ===== -->
+  <section class="slide v4-dark" aria-label="Capa">
+    <div class="slide__conteudo">
+      <p class="v4-eyebrow">Planejamento estratégico · 2026</p>
+      <hr class="v4-regua">
+      <h1 class="v4-titulo-display" style="margin:0">O GARGALO<br>NÃO É TRÁFEGO</h1>
+    </div>
+    <span class="assinatura-cliente">Nome do Cliente</span>
+    <span class="assinatura">V4 Carvalho &amp; Co</span>
+  </section>
+
+  <!-- ===== CONTEÚDO — fundo branco, o padrão ===== -->
+  <section class="slide" aria-label="Diagnóstico de aquisição">
+    <span class="assinatura">V4 Carvalho &amp; Co</span>
+    <div class="slide__conteudo">
+      <p class="v4-eyebrow" data-anim>02 // Diagnóstico de aquisição</p>
+      <hr class="v4-regua">
+      <h2 data-anim style="margin:0 0 8px">O CAC SUBIU 41% EM SEIS MESES</h2>
+      <p class="v4-subtitulo" data-anim>Enquanto o ticket médio ficou estável.</p>
+
+      <div class="grid-4" style="margin-top:var(--v4-sp-4)" data-anim>
+        <div><div class="v4-kpi-label">Investimento</div>
+          <div class="v4-kpi-valor v4-kpi-valor--tile">R$ 84k</div>
+          <span class="v4-badge v4-badge--neutro">— estável</span></div>
+        <div><div class="v4-kpi-label">CAC</div>
+          <div class="v4-kpi-valor v4-kpi-valor--tile v4-kpi-valor--destaque">R$ 184</div>
+          <span class="v4-badge v4-badge--negativo">▲ 41% vs. jan</span></div>
+        <div><div class="v4-kpi-label">Ticket médio</div>
+          <div class="v4-kpi-valor v4-kpi-valor--tile">R$ 1.290</div>
+          <span class="v4-badge v4-badge--positivo">▲ 6% vs. jan</span></div>
+        <div><div class="v4-kpi-label">ROAS</div>
+          <div class="v4-kpi-valor v4-kpi-valor--tile">4,1x</div>
+          <span class="v4-badge v4-badge--atencao">▼ 0,8 vs. meta</span></div>
+      </div>
+
+      <div class="conclusao" data-anim>
+        <p class="conclusao__label">Conclusão estratégica</p>
+        <p style="margin:4px 0 0">O aumento de custo não veio acompanhado de ganho de valor por
+        cliente, então a margem por venda caiu na mesma proporção.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTEÚDO — blocos ===== -->
+  <section class="slide" aria-label="Causas">
+    <span class="assinatura">V4 Carvalho &amp; Co</span>
+    <div class="slide__conteudo">
+      <p class="v4-eyebrow" data-anim>03 // Causas</p>
+      <hr class="v4-regua">
+      <h2 data-anim style="margin:0 0 8px">DOIS FATORES EXPLICAM A CURVA</h2>
+      <p class="v4-subtitulo" data-anim>Um é de mídia, o outro é estrutural.</p>
+
+      <div class="grid-2" style="margin-top:var(--v4-sp-4)">
+        <div class="v4-bloco" data-anim>
+          <strong style="text-transform:uppercase">Saturação de público</strong>
+          <div class="v4-eyebrow" style="margin:4px 0">// Fato observado</div>
+          <p style="margin:0">A frequência passou de 4,2 no mesmo público desde março. O custo por
+          resultado acompanha a curva, o que indica esgotamento, não queda de criativo.</p>
+        </div>
+        <div class="v4-bloco" data-anim>
+          <strong style="text-transform:uppercase">Dependência de um único canal</strong>
+          <div class="v4-eyebrow" style="margin:4px 0">// Hipótese</div>
+          <p style="margin:0">78% da receita paga vem de uma campanha. Qualquer instabilidade nela
+          derruba o mês inteiro.</p>
+        </div>
+      </div>
+
+      <div class="conclusao" data-anim>
+        <p class="conclusao__label">Conclusão estratégica</p>
+        <p style="margin:4px 0 0">Aumentar verba no público atual acelera o problema. A saída é
+        abrir uma segunda fonte de demanda antes de escalar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SEPARADOR — escuro ===== -->
+  <section class="slide v4-dark" aria-label="Separador: o plano">
+    <div class="slide__conteudo">
+      <p class="v4-eyebrow">Parte 2</p>
+      <hr class="v4-regua">
+      <h2 class="v4-titulo-display" style="margin:0;font-size:clamp(44px,9vw,140px)">O PLANO</h2>
+    </div>
+    <span class="assinatura">V4 Carvalho &amp; Co</span>
+  </section>
+
+  <!-- ===== ENCERRAMENTO — escuro ===== -->
+  <section class="slide v4-dark" aria-label="Encerramento">
+    <div class="slide__conteudo">
+      <p class="v4-eyebrow">Próximo passo</p>
+      <hr class="v4-regua">
+      <h2 class="v4-titulo-display" style="margin:0;font-size:clamp(40px,7vw,110px)">COMEÇAMOS<br>EM JANEIRO</h2>
+    </div>
+    <span class="assinatura-cliente">Nome do Cliente</span>
+    <span class="assinatura">V4 Carvalho &amp; Co</span>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  const deck     = document.querySelector('.deck');
+  const slides   = [...deck.querySelectorAll('.slide')];
+  const barra    = document.querySelector('.progresso');
+  const contador = document.querySelector('.contador');
+  const pad      = n => String(n).padStart(2, '0');
+
+  // Progresso, contador e cor do contador sobre slide escuro.
+  function atualiza() {
+    const max = deck.scrollHeight - deck.clientHeight;
+    barra.style.width = (max > 0 ? (deck.scrollTop / max) * 100 : 0) + '%';
+    const i = Math.round(deck.scrollTop / deck.clientHeight);
+    const atual = Math.min(Math.max(i, 0), slides.length - 1);
+    contador.textContent = pad(atual + 1) + ' / ' + pad(slides.length);
+    contador.classList.toggle('is-dark', slides[atual].classList.contains('v4-dark'));
+  }
+  deck.addEventListener('scroll', atualiza, { passive: true });
+  window.addEventListener('resize', atualiza);
+  atualiza();
+
+  // Teclado: o comportamento nativo do snap varia entre navegadores,
+  // então movemos slide a slide explicitamente.
+  // Vizinho vai suave; salto de extremidade vai instantâneo, senão Home/End
+  // num deck de 20 slides levaria vários segundos rolando.
+  function vaiPara(i, instantaneo) {
+    const alvo = slides[Math.min(Math.max(i, 0), slides.length - 1)];
+    alvo.scrollIntoView({ behavior: instantaneo ? 'instant' : 'smooth', block: 'start' });
+  }
+  deck.addEventListener('keydown', e => {
+    const i = Math.round(deck.scrollTop / deck.clientHeight);
+    const proximo = { ArrowDown: 1, PageDown: 1, ' ': 1, ArrowUp: -1, PageUp: -1 }[e.key];
+    if (proximo) { e.preventDefault(); vaiPara(i + proximo); }
+    else if (e.key === 'Home') { e.preventDefault(); vaiPara(0, true); }
+    else if (e.key === 'End')  { e.preventDefault(); vaiPara(slides.length - 1, true); }
+  });
+  deck.focus();
+
+  // Reveal.
+  const io = new IntersectionObserver(entradas => {
+    entradas.forEach(en => en.isIntersecting && en.target.classList.add('is-in'));
+  }, { threshold: 0.15 });
+  document.querySelectorAll('[data-anim]').forEach(el => io.observe(el));
+})();
+</script>
+
+</body>
+</html>

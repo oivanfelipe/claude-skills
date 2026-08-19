@@ -4,10 +4,12 @@ version: 1.0.0
 description: |
   Fonte da verdade da identidade visual da V4 Company — Carvalho & Co. Aplica a
   paleta, tipografia, grid, componentes e regras de marca em qualquer entrega:
-  apresentações (PPTX e deck HTML), dashboards e gráficos, documentos (DOCX/PDF)
-  e interfaces web (HTML/React/CSS). Padrão obrigatório: fundo branco, preto como
-  cor de texto, vermelho apenas como acento. Fundo escuro cinematográfico só em
-  capa, separadores de seção, encerramento e peças de impacto.
+  apresentações, dashboards e gráficos, documentos (DOCX/PDF) e interfaces web
+  (HTML/React/CSS). Padrão obrigatório: fundo branco, preto como cor de texto,
+  vermelho apenas como acento. Fundo escuro cinematográfico só em capa,
+  separadores de seção, encerramento e peças de impacto. Apresentação se entrega
+  como deck de scroll vertical, um slide por tela, rolagem só para baixo — PPTX
+  apenas quando o cliente precisar do arquivo.
   Ativadores: "identidade visual da V4", "identidade da V4", "identidade visual
   V4", "padrão visual da V4", "cores da V4", "paleta da V4", "marca da V4",
   "brand V4", "no padrão V4", "com a cara da V4", "aplicar a identidade",
@@ -81,6 +83,10 @@ que mede 4,47:1 sobre a tinta clara e reprova por pouco; o valor correto é
 Toda peça de **conteúdo** — slide de análise, página de documento, tela de
 dashboard, seção de landing page — usa **fundo branco `#FFFFFF`**, texto em
 **preto `#111111`** e **vermelho `#C00000` somente como acento**.
+
+E apresentação se entrega como **deck de scroll vertical, um slide por tela**,
+com encaixe e rolagem só para baixo — não como passador de slides. PPTX apenas
+quando o cliente precisar do arquivo. Ver `references/apresentacoes.md`.
 
 O vermelho nunca é fundo de área extensa, nunca é cor de corpo de texto, e nunca
 compete com o dado. Ele marca: o cabeçalho de seção, a borda esquerda de blocos e
@@ -174,6 +180,9 @@ Arquivos prontos para copiar:
 - `assets/v4-tokens.css` — custom properties para qualquer peça web/HTML.
 - `assets/v4-tokens.json` — mesmos tokens para consumo programático
   (pptxgenjs, python-docx, matplotlib, scripts de build).
+- `assets/deck-template.html` — **base de toda apresentação**. Deck de scroll
+  vertical, um slide por tela, com encaixe, progresso, contador e navegação por
+  teclado já resolvidos. Copie e preencha; não recomece do zero.
 - `assets/exemplo.html` — a identidade renderizada, com todos os componentes.
   Abra no navegador; serve de referência de implementação.
 
