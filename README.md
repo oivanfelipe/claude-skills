@@ -29,7 +29,7 @@ Para instalar nos dois ambientes (PC e nuvem), siga [`identidade-visual-v4/INSTA
 
 ```bash
 python3 identidade-visual-v4/scripts/validar-contraste.py --auditoria  # audita a paleta
-bash identidade-visual-v4/scripts/empacotar.sh                         # gera o zip de upload
+bash empacotar.sh identidade-visual-v4                                 # gera o zip de upload
 ```
 
 ## Verificação automática

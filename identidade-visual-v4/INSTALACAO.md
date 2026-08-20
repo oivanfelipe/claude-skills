@@ -76,11 +76,17 @@ identidade visual valer lá também, suba o pacote:
 
 ```bash
 cd ~/.agents/skills
-bash identidade-visual-v4/scripts/empacotar.sh
+bash empacotar.sh identidade-visual-v4
 ```
 
 O script gera `dist/identidade-visual-v4.zip` com `SKILL.md` na raiz do zip, que
-é o formato que o upload espera.
+é o formato que o upload espera. Ele empacota qualquer skill do repositório:
+
+```bash
+bash empacotar.sh --lista                          # o que dá para empacotar
+bash empacotar.sh identidade-visual-v4 argus       # várias de uma vez
+bash empacotar.sh --todas                          # todas
+```
 
 Depois, em **claude.ai → Settings → Capabilities → Skills → Upload skill**,
 envie o `.zip`.
@@ -89,6 +95,13 @@ A partir daí a skill aparece junto das outras skills V4 já sincronizadas
 (`criar-apresentacao`, `doutor-carvalho`, `argus`, `scope-auditor`,
 `planejamento-estrategico-v4`) em qualquer sessão da conta — web, app, mobile e
 sessões remotas de qualquer projeto.
+
+### Quais skills precisam de re-upload
+
+As que existem nos dois lugares e divergiram. Hoje são duas:
+`identidade-visual-v4`, que só existe aqui, e `planejamento-estrategico-v4`,
+cujo Módulo 13 foi alinhado ao deck de scroll neste repositório mas continua
+pedindo passador de slides na cópia da conta.
 
 **Refaça o upload sempre que editar a skill aqui.** O repositório e a conta
 claude.ai não sincronizam sozinhos — este é o passo manual do processo, e é o

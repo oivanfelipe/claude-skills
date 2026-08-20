@@ -19,12 +19,12 @@ jobs:
       - name: Integridade do repositório e contraste da paleta
         run: python3 .github/scripts/validar-repo.py
 
-      - name: Empacotar a identidade visual para upload
-        run: bash identidade-visual-v4/scripts/empacotar.sh
+      - name: Empacotar as skills para upload
+        run: bash empacotar.sh --todas
 
-      - name: Publicar o pacote como artefato
+      - name: Publicar os pacotes como artefato
         uses: actions/upload-artifact@v4
         with:
-          name: identidade-visual-v4
-          path: dist/identidade-visual-v4.zip
+          name: skills-para-upload
+          path: dist/*.zip
           if-no-files-found: error
