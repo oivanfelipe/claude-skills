@@ -16,6 +16,11 @@ Esta pasta é a localização real usada pelo CLI (`~/.agents/skills/`). O Claud
 - **planejamento-estrategico** — skill própria (autoria do usuário), metodologia completa de planejamento estratégico de marketing: diagnóstico de maturidade digital, objetivo, personas, canais, quatro pilares (aquisição/engajamento/monetização/retenção), execução, mensuração, projeção e apresentação HTML no padrão visual V4.
 - **frontend-design** ([anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/frontend-design)) — direção estética e escolhas visuais intencionais ao construir ou redesenhar UI.
 - **superpowers** — instalado como plugin (não skill) via `claude plugin install superpowers@claude-plugins-official`, do marketplace oficial da Anthropic. Não faz parte desta pasta/repo; gerenciado pelo próprio `claude plugin`.
+- **128 skills do Google** ([google/skills](https://github.com/google/skills)) — conjunto completo de skills oficiais do Google, cobrindo:
+  - **Google Cloud (110 skills)**: GKE, BigQuery, Cloud Run, Cloud SQL, Firebase, Gemini API, Genkit, AlloyDB, Spanner, Cloud Monitoring, Cloud Logging, IAM, gcloud CLI, Agent Platform (deploy, inference, RAG, tuning, eval), soluções de arquitetura, segurança, analytics, entre outros.
+  - **Google Ads (14 skills)**: Google Ads API (quickstart, diagnostics, MCP setup), Google Mobile Ads (banner, interstitial, rewarded, get-started), Data Manager API (setup, audience, events), IMA SDK.
+  - **Google Analytics (2 skills)**: Admin API e Data API basics.
+  - **Google Developers (2 skills)**: `finding-google-skills`, `retrieving-developer-knowledge`.
 
 ## Instalando uma skill nova
 
