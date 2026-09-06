@@ -19,6 +19,18 @@
 
 ---
 
+## Regra de Execução
+
+Antes de iniciar qualquer tarefa que envolva análise, estratégia, criação de conteúdo ou entrega de documento:
+
+1. **Confirmar o entendimento** — resumir em 2-3 linhas o que foi pedido e qual será a abordagem
+2. **Identificar lacunas** — se faltar informação crítica para fazer bem feito, perguntar antes de começar
+3. **Aguardar confirmação** — só executar após o usuário validar o entendimento
+
+**Exceções** (pode executar direto): perguntas factuais simples, buscas rápidas, tarefas com escopo totalmente claro e sem ambiguidade.
+
+---
+
 ## Skills para análise de clientes
 
 Sempre que for solicitada uma análise de cliente, usar proativamente:
