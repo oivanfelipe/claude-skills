@@ -19,6 +19,17 @@
 
 ---
 
+## Skills para análise de clientes
+
+Sempre que for solicitada uma análise de cliente, usar proativamente:
+
+- `/geo-monitor` — verificar se a marca do cliente aparece nas respostas de IAs (ChatGPT, Perplexity, Gemini, Google AI, Copilot)
+- `/ai-citations-report` — relatório de citações da marca em motores de IA
+- `/ads-audit` — auditoria de performance de anúncios
+- `/ads-report` — relatório estruturado de campanhas
+
+---
+
 ## Servidor MCP
 
 - **Adspirer**: `https://mcp.adspirer.com/mcp` (conectado via configuração local)
