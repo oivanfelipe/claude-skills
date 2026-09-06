@@ -19,6 +19,20 @@
 
 ---
 
+## Regra de Publicação no Vercel
+
+Antes de qualquer deploy no Vercel, verificar obrigatoriamente:
+
+1. **Build local** — rodar `npm run build` (ou equivalente) e confirmar que passa sem erros
+2. **Variáveis de ambiente** — checar se todas as variáveis necessárias estão configuradas no projeto Vercel
+3. **Dependências** — confirmar que `package.json` e lockfile estão consistentes
+4. **TypeScript / lint** — rodar checagem de tipos e lint se o projeto usar
+5. **Arquivos ignorados** — confirmar que nenhum arquivo crítico está no `.gitignore` por engano
+
+Só publicar após todas as verificações passarem. Nunca fazer deploy especulativo para "ver se funciona".
+
+---
+
 ## Regra de Execução
 
 Antes de iniciar qualquer tarefa que envolva análise, estratégia, criação de conteúdo ou entrega de documento:
