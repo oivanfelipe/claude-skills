@@ -1,0 +1,713 @@
+{
+  "version": 1,
+  "skills": {
+    "ab-test-setup": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ab-test-setup/SKILL.md",
+      "computedHash": "4504b288887dd9279c6c9ccffc8fe7c14b4268f6b7cc674f0b7e2f0eb09fe054"
+    },
+    "ads": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "ads/SKILL.md",
+      "computedHash": "53c1e33e3b53acb96175e14027fa0620568a8d7ab09e56093400c1d0493a9255"
+    },
+    "ads-amazon": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-amazon/SKILL.md",
+      "computedHash": "78229669eaafe26fcaeb81c0085a9e755080528e67961728ad5353836de2d0d6"
+    },
+    "ads-apple": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-apple/SKILL.md",
+      "computedHash": "3a0636e331c34d6ff1d69b30401782560611ae8cb9d1bbdd0edbef8b67b5c551"
+    },
+    "ads-attribution": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-attribution/SKILL.md",
+      "computedHash": "8b3bd403a367fe2065e5ac0daac522b57572a403e0873be392c4a47f185c96cc"
+    },
+    "ads-audit": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-audit/SKILL.md",
+      "computedHash": "8c8bddbe0ff0e362d227e977be9194f1843d0b99a85143497fd1084079ea651e"
+    },
+    "ads-budget": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-budget/SKILL.md",
+      "computedHash": "8c8c6648c4821ebf3a53546a56da68473d4d8b7ffcb360f7e5fddd6be267f48e"
+    },
+    "ads-competitor": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-competitor/SKILL.md",
+      "computedHash": "85b01213aef0eb0d15525e4211419d2884c59da40db4dab221c5e9fd7a1f7ff4"
+    },
+    "ads-create": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-create/SKILL.md",
+      "computedHash": "fc751ef4d2c9983d0dc584fd5ac794476804de81e97d7f437d47c31ac2977ecb"
+    },
+    "ads-creative": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-creative/SKILL.md",
+      "computedHash": "d53b5e0f91d0318bf59b15d87ed6e88cbd9c6333f8792215baf6a40344109889"
+    },
+    "ads-dna": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-dna/SKILL.md",
+      "computedHash": "13896c461a7cd761ea93b81ab4ea7e500e412b278816cb08da4db4951b198adf"
+    },
+    "ads-generate": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-generate/SKILL.md",
+      "computedHash": "3f3a163394413b58cceeb9e91a75c1ff3c6843478ffca0a9750e30e050acc117"
+    },
+    "ads-google": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-google/SKILL.md",
+      "computedHash": "6cd4a7c342abff18d80cbce501e92dbcc194f4e61f2e7fdfbdcae5888b168280"
+    },
+    "ads-landing": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-landing/SKILL.md",
+      "computedHash": "961bc64dc41c3e1fbef6a572ed966dcbb7742294fdb6f879f4cdf7da07228f80"
+    },
+    "ads-launch": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-launch/SKILL.md",
+      "computedHash": "5078f423eb55520f70dbdc6ec844162f95a327cd2d37ffb6b499b69a739113a0"
+    },
+    "ads-linkedin": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-linkedin/SKILL.md",
+      "computedHash": "3f33086cff573f99c3895d9c8cb1c58e5e7ea959d39c034f103f8fd8f3950c8a"
+    },
+    "ads-math": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-math/SKILL.md",
+      "computedHash": "2b8734bf30fd967079e8ba273c16acbe64971af1015893f853cd5aca50cba5d0"
+    },
+    "ads-meta": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-meta/SKILL.md",
+      "computedHash": "79910a66fb29bc999adaf46df95bb72bb1b95b1dbf701725765e7ee42afbab05"
+    },
+    "ads-microsoft": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-microsoft/SKILL.md",
+      "computedHash": "569b3be2cf6c7d63a8d66b367cc3c83d9c01fdbfeeee28bbddcccf9593f2854c"
+    },
+    "ads-monitor": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-monitor/SKILL.md",
+      "computedHash": "628999ba170a17cfb7568ca9f770e42ff8a8c18964bacf9c4c90a1cc36c9a882"
+    },
+    "ads-next": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-next/SKILL.md",
+      "computedHash": "50b3b696ad9ac21a85d4fbbb04cd664ad2508111b40ebcc2621298b937d4b89d"
+    },
+    "ads-optimize": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-optimize/SKILL.md",
+      "computedHash": "fb00b834c4649485d895fbedfdbc8f534d6cdba5548f85f85858ba62d4b547c8"
+    },
+    "ads-photoshoot": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-photoshoot/SKILL.md",
+      "computedHash": "523a1801f02249e2ede6f109bffd1d24de39fd088e5ee87344fe7c8735857a0e"
+    },
+    "ads-pinterest": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-pinterest/SKILL.md",
+      "computedHash": "179326b267d68e5907399f93e9aa8411e64aa3e183a7b19e8b36a1b6a3be9895"
+    },
+    "ads-plan": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-plan/SKILL.md",
+      "computedHash": "049dc6bcc2cedef82bf3ab86cebf81d0bef064942c94e46c88ffe4aabf2431f0"
+    },
+    "ads-publish": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-publish/SKILL.md",
+      "computedHash": "a691d065a217e10ce29e52734f4114a900b8e6111cf89eaad7c400ae00d82051"
+    },
+    "ads-reddit": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-reddit/SKILL.md",
+      "computedHash": "7a5a2cf34cab5bd3ee2bd4b8383da4bfc7fe6540b7f61c74ca8ef6601eede7bd"
+    },
+    "ads-report": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-report/SKILL.md",
+      "computedHash": "789a24d82e590a6a1abfd26282e85778a7670aae963e1e91f2a6673bc20200e5"
+    },
+    "ads-research": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-research/SKILL.md",
+      "computedHash": "0e0690b7cdab5c220edb9d9fc5942430dce136a6270745bfa2db032fe3dfcec9"
+    },
+    "ads-server-side-tracking": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-server-side-tracking/SKILL.md",
+      "computedHash": "40cdfeb2862f0ef8d76eff8b2713b910513c7e92860300510ce91a9e6c9d8a44"
+    },
+    "ads-setup": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-setup/SKILL.md",
+      "computedHash": "bb67350e71731c238b40751d56f756a4d2a0a779906e7fe4658b57a645604d02"
+    },
+    "ads-snapchat": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-snapchat/SKILL.md",
+      "computedHash": "7c031a890b38b2053651dd13c8ae4272b9dc527424a06b90c820ea4ff2c3ec23"
+    },
+    "ads-start": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-start/SKILL.md",
+      "computedHash": "c83d6f1fbc7d0d05213bd1cb6296ec3e0886c2d8b83a43adf4e45f4d641919f6"
+    },
+    "ads-test": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-test/SKILL.md",
+      "computedHash": "6ac205cf865f2794d7c43144d5656d11d72ace6f4c080a23bda11badf00c06ed"
+    },
+    "ads-tiktok": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-tiktok/SKILL.md",
+      "computedHash": "dbeadc606eb6235dbabdf48c37bbf065accddc16ec36c7f068c00afa2648f585"
+    },
+    "ads-update": {
+      "source": "Hainrixz/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-update/SKILL.md",
+      "computedHash": "837f8963d94a81f8f20e7459f15d2734c106ff396438a652a5d84e05d31bd281"
+    },
+    "ads-validate": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-validate/SKILL.md",
+      "computedHash": "0853ff579ef441abbe87847292beaabbafed7856e3ddd78d165970374b12cb42"
+    },
+    "ads-x": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-x/SKILL.md",
+      "computedHash": "fcdead99242a1c6b99bfe1a594c60b3e71d87e3336f22ff8882ecda37c49cd34"
+    },
+    "ads-youtube": {
+      "source": "AgriciDaniel/claude-ads",
+      "sourceType": "github",
+      "skillPath": "skills/ads-youtube/SKILL.md",
+      "computedHash": "fc42df72e4d02ab79fac24b42ff283e7eeb28bf33800d1c518a9e27ba0731c16"
+    },
+    "affiliate-marketing": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/affiliate-marketing/SKILL.md",
+      "computedHash": "48f39ad993db3bbdf1254465c87707b4787dfe8e18022dd1a52af202d5644be7"
+    },
+    "ahrefs-python": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ahrefs-research/SKILL.md",
+      "computedHash": "7bf8b185f9a47c2d0dcfb2cc38e91bc031f02690407c04da4dcc5b58fffb64c0"
+    },
+    "ai-citations-report": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ai-citations-report/SKILL.md",
+      "computedHash": "b30f4ca8431c872033548da4b99dd77c3591744cf9b2bf895c5f9ab7f5ad8a0c"
+    },
+    "apollo-outreach": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/apollo-outreach/SKILL.md",
+      "computedHash": "5f7742dcdf174b4d187c48caefb5565f50c0b1ef4c19d3d06d5e3d2d60bce439"
+    },
+    "backlink-audit": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/backlink-audit/SKILL.md",
+      "computedHash": "35a5e106f0e42816dd29631671bbdbcc8a305e71035a3196140a9938f0c569ea"
+    },
+    "bluesky": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/bluesky/SKILL.md",
+      "computedHash": "b48b6c64886dd3e9dbea2a9f247a1f6a8530e365e5508db3d7b543a0ac04d679"
+    },
+    "brand-dev": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/brand-research/SKILL.md",
+      "computedHash": "520b724e6b3dc5aea0a608121678395163aef51ceaf78953d56249eca908825c"
+    },
+    "brand-monitor": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/brand-monitor/SKILL.md",
+      "computedHash": "9e2832e1c096c417fed9d334b5acf0484136ffadf3ea7106379a7296e0241e1c"
+    },
+    "competitor-analysis": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/competitor-analysis/SKILL.md",
+      "computedHash": "fa76a27db021fe92dc8f12e957c2c56dbe292d8eb54bc2dd02ffe8d26c11c116"
+    },
+    "content-calendar": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/content-calendar/SKILL.md",
+      "computedHash": "ffa5ad109a51feb48cac064bb80d20a3cca2e2b0e81892b88260b9e9e656bc30"
+    },
+    "content-gap-analysis": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/content-gap-analysis/SKILL.md",
+      "computedHash": "59f0f734260e893caac97431e7410d4b3e07ae78269d77ebd7cdaa85efdf1f64"
+    },
+    "content-repurposing": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/content-repurposing/SKILL.md",
+      "computedHash": "eb7e411c9a2deb5a2314c5db1a05b08385273e0217f229fa6d29c1073f3a2c72"
+    },
+    "content-strategy": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/content-strategy/SKILL.md",
+      "computedHash": "6b0cb26eae782eeb6f29efb5f51fd2a56589a7e5e36037c7f4cc3126c4c7cc61"
+    },
+    "copy-editing": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/copy-editing/SKILL.md",
+      "computedHash": "8276b94427d552dedc980749ad4eb41afeaeef7ab4b189b93f83c904dc136ec6"
+    },
+    "copywriting": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/copywriting/SKILL.md",
+      "computedHash": "ea0ae5f8ea42eb08174105d347f7c3d7518230c87621b5feb72896c723fd593c"
+    },
+    "demand-gen": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/demand-gen/SKILL.md",
+      "computedHash": "854f1bba6bdd437512faea065f47c962c81208328b3f68326e895b6582703c2b"
+    },
+    "discord-bot": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/discord-bot/SKILL.md",
+      "computedHash": "81a8ea43e62370604ce1781c1c6b60c3d3594ecf757b7ee29936f20b53a7ea0c"
+    },
+    "domain-research": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/domain-research/SKILL.md",
+      "computedHash": "1e3e840a26e5fb7ea2652bc3888a377dafd0031391648aabb27716b48b2a768b"
+    },
+    "email-sequence": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/email-sequence/SKILL.md",
+      "computedHash": "e470c10c30d549e7164844dc11d04032fae7c7b23728977d47cdb610198bfbd7"
+    },
+    "email-subject-lines": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/email-subject-lines/SKILL.md",
+      "computedHash": "0149237a7012c324a15f481d4da7c9702159d89d1f0bac829fd66a1f903eb32e"
+    },
+    "facebook-ads": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/facebook-ads/SKILL.md",
+      "computedHash": "e50ba65e8c8546f0d2f5bad59b2eb7a881f48016a5b07ba85f66341c09d2e349"
+    },
+    "feishu-lark": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/feishu-lark/SKILL.md",
+      "computedHash": "0c76949c8c4f2585199e17e47099673ecf25313c4b33bcf334165aaccc488b1d"
+    },
+    "generate-image": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ai-image-gen/SKILL.md",
+      "computedHash": "a17a3ed84c37000aa221ae1694fd7952a64417dc3e99cff9e0d347d071e5b117"
+    },
+    "geo-analysis": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/geo-analysis/SKILL.md",
+      "computedHash": "0ba2c1ba8af089e670b877f20f704474bd092a11e0530552349d36756a3cff07"
+    },
+    "geo-difficulty": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/geo-difficulty/SKILL.md",
+      "computedHash": "1136538ca9d598ec4f0cef04de6aca752d062d2e85315ffef3aca124005cfadd"
+    },
+    "geo-query-finder": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/geo-query-finder/SKILL.md",
+      "computedHash": "1400cc947279c8b3dd4da93c6e7d7c5f5e01cdc606522d37d1c14c863e2f3a90"
+    },
+    "github-stars": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/github-stars/SKILL.md",
+      "computedHash": "abee9e8097a9a710df4c9b77fbdd3ecfedac1629c73d4676dac0e0283196bf2e"
+    },
+    "google-ads": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/google-ads/SKILL.md",
+      "computedHash": "4ee30c668dc6d9325edbe8ba2c06f19f33816d356f422d05915eb0ab873e3e87"
+    },
+    "google-ads-analysis": {
+      "source": "itallstartedwithaidea/google-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/google-ads-analysis/SKILL.md",
+      "computedHash": "5f8782c961a3ca88f4e5100cc669f8e0d24e4b44572fd9142e632dfe3d375d76"
+    },
+    "google-ads-audit": {
+      "source": "itallstartedwithaidea/google-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/google-ads-audit/SKILL.md",
+      "computedHash": "d26be9d0735748701ab508c7b256a0daa87453cab39a5d49e6ee4dcb1a7193f5"
+    },
+    "google-ads-math": {
+      "source": "itallstartedwithaidea/google-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/google-ads-math/SKILL.md",
+      "computedHash": "fc7dc971071d8af337c05063624fc035fb35365fe2ded0c3b27dd837b3b4d4c4"
+    },
+    "google-ads-mcp": {
+      "source": "itallstartedwithaidea/google-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/google-ads-mcp/SKILL.md",
+      "computedHash": "34166333979e5de6c565c1de3d63d5afe71e06643a182f31bb6d779d7127df91"
+    },
+    "google-ads-report": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/google-ads-report/SKILL.md",
+      "computedHash": "8f42c66aa540df5351216eba6b4b3e2c3360dbe5c973a58c254ece37e59a17e5"
+    },
+    "google-ads-write": {
+      "source": "itallstartedwithaidea/google-ads-skills",
+      "sourceType": "github",
+      "skillPath": "skills/google-ads-write/SKILL.md",
+      "computedHash": "1ef7a1d36f133480bcff0add0382907ad6aead209539c186194d6f4bb0fc81c7"
+    },
+    "google-analytics": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/google-analytics/SKILL.md",
+      "computedHash": "1ad37e9bf46af10e5d5451712b2fb119ac6438725174b5cafdd37c25edebc665"
+    },
+    "google-reviews": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/google-reviews/SKILL.md",
+      "computedHash": "f993d37039f467aa3bd6d7178de6a88e2c5763720c78225b8b85131d330d8600"
+    },
+    "growth-strategy": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/growth-strategy/SKILL.md",
+      "computedHash": "1c68490d8a11188891c37947d77f4115995ba07e73b03132ee1a90de8b4c59e7"
+    },
+    "gsc-portfolio-audit": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsc-portfolio-audit/SKILL.md",
+      "computedHash": "d4866c6df3431b70e87caa414fc048078b5918d2ea8f5b8e88f7d644de1c3018"
+    },
+    "hubspot": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/hubspot/SKILL.md",
+      "computedHash": "35377e6b70c541d682fce4c5d3fd9c3db6df881ebb384cae38b0dc7b9dff0ba6"
+    },
+    "i18n": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/i18n/SKILL.md",
+      "computedHash": "b6728255604d0c540ec7e343a56fabec9eef2240e9fce6ea6474521e1b78f4ce"
+    },
+    "icp-builder": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/icp-builder/SKILL.md",
+      "computedHash": "526ad450c28364acc7b375bb5fcfa8ae66a2ac1a8ca160b0f8ff2c7091026d9a"
+    },
+    "keyword-research": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/keyword-research/SKILL.md",
+      "computedHash": "53151f19623f025d17a9d68cc581bad3d154e9cb089c51e3265df1b82596706f"
+    },
+    "launch-strategy": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/launch-strategy/SKILL.md",
+      "computedHash": "7c5a4fb14b0bbbb846cd3a12bdfc27b9a53f62a71c3eb397c4a2713bba8a5400"
+    },
+    "lead-magnet": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/lead-magnet/SKILL.md",
+      "computedHash": "13f7d6c23901f312bcff76e347d5f8e7ff168c4ad0722b692d331d8f7997dbb0"
+    },
+    "linkedin-ads": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-ads/SKILL.md",
+      "computedHash": "b55a9f1deb09a203664c2fce8567da33ae4b341b1295ca6441eceea8f80eb161"
+    },
+    "linkedin-content": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linkedin-content/SKILL.md",
+      "computedHash": "22561528da557b44980d2866d279ceaccc5ba2c89157bdd0ffdcdc9d91c777aa"
+    },
+    "marketing-ideas": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/marketing-ideas/SKILL.md",
+      "computedHash": "80686116fd35bfa93c6322db3e7d9c4bede38ab7c38332ab54cf67f2334eb7b0"
+    },
+    "marketing-slides": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/marketing-slides/SKILL.md",
+      "computedHash": "a0bcbfed6253fb942072e51ee43250884065b9fe1361a36908ba0ea12227f108"
+    },
+    "newsletter": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/newsletter/SKILL.md",
+      "computedHash": "8e17f1c47dfd51881f70e3428f4c8660f85e417ccba0f0df54f770caf7e70b0b"
+    },
+    "onboarding-cro": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/onboarding-cro/SKILL.md",
+      "computedHash": "df97380cde460a7c11cb3ae3515cdf2cdd339a6ebe95f7ce7dbd487a3cab3df2"
+    },
+    "organize-skills": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/organize-skills/SKILL.md",
+      "computedHash": "4ad06e7502238f0efca132741011d71a61155551809337a99fd5b42efffd92cf"
+    },
+    "page-cro": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/page-cro/SKILL.md",
+      "computedHash": "897ef028919ada6efd07861c5b8831a2b6caaca3e85ae93575c65678fa2fbd48"
+    },
+    "podcast-edit": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/podcast-edit/SKILL.md",
+      "computedHash": "0e1a91993fe4fe4f0ab9c4f08b76a994da33ae7b3bb0a051c2e90cc44a33bd47"
+    },
+    "podcast-marketing": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/podcast-marketing/SKILL.md",
+      "computedHash": "d2adf5f8207c4b5f0ac2e5256d32aaac8dea69b9d575dc3a295e95245d936168"
+    },
+    "pricing-strategy": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/pricing-strategy/SKILL.md",
+      "computedHash": "a32a0c3c7754bef3e4241f05bc0fdc235d7c8d4f448c6d35c1e86b90bfb43452"
+    },
+    "product-marketing": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/product-marketing/SKILL.md",
+      "computedHash": "708d4c4c7dcbc6cac6e9302418c952541a0a328c9048b462567b67c83e855848"
+    },
+    "programmatic-seo": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/programmatic-seo/SKILL.md",
+      "computedHash": "1da14fbfffbe372447e662eabaf2c31fc5324d9e5a719f85a435102da62fc99f"
+    },
+    "reddit-marketing": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/reddit-marketing/SKILL.md",
+      "computedHash": "46ba57c0463a67ad1682cd1cf7c9e04529564b9299b2ca9f16994beb51f5273a"
+    },
+    "referral-program": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/referral-program/SKILL.md",
+      "computedHash": "99556ec9e5ef5155a6a33ff55ebed350f32f67e73b3c81d16f0d3caf4ca73da8"
+    },
+    "schema-markup": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/schema-markup/SKILL.md",
+      "computedHash": "7131c102c34bfdc206b40557676e23109758044c5fbd80e6e44f399bc91feaa9"
+    },
+    "search-console": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/search-console/SKILL.md",
+      "computedHash": "a4d1eb0a2e9315482f72331dbd1d8aba1b86cd1a76e2f6cda8b10e17312c3839"
+    },
+    "semrush-research": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/semrush-research/SKILL.md",
+      "computedHash": "a6b924be41b537712b0db4cff0d318c9f08e82c6c99f09fb43b8df3a49a58b68"
+    },
+    "seo-audit": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/seo-audit/SKILL.md",
+      "computedHash": "2aaa81bc17d05be6ca64747ddace9d476a47801ce092d2637231c25c7bbe7c4d"
+    },
+    "seo-content-brief": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/seo-content-brief/SKILL.md",
+      "computedHash": "2aa1c447f0a063390b23b391495e345cba2dc9e38c8790b8c36f90686284d58d"
+    },
+    "serp-analyzer": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/serp-analyzer/SKILL.md",
+      "computedHash": "2c0ef854501089cf97800f1ad9a4826ee7cfde900278b23eb82b9e80f7f822a1"
+    },
+    "signup-flow-cro": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/signup-flow-cro/SKILL.md",
+      "computedHash": "f715eedeb8e33c9ff744b2d06004d86d7f1343dd9b326307cdb06514b2705e6d"
+    },
+    "similarweb-traffic": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/similarweb-traffic/SKILL.md",
+      "computedHash": "b17cbbd7fa8b4b5420ee4a2b501388b88c07594460254a72785ed76b1359dabc"
+    },
+    "slack-bot": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/slack-bot/SKILL.md",
+      "computedHash": "5a97976c613d7eba3a743d0ebb4ede1b633a291abce1f2d224caa93e2aac12aa"
+    },
+    "social-content": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/social-content/SKILL.md",
+      "computedHash": "4461323ac656e0a095d0071be4f3778dc1ac65c9215e33622f48a81ae463bd00"
+    },
+    "stripe-dispute": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/stripe-dispute/SKILL.md",
+      "computedHash": "916ff1effd614b41a3ecb584957aa994ac572c6f4be6c2715855587ac57de7dd"
+    },
+    "task-banner": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/task-banner/SKILL.md",
+      "computedHash": "7c92e092b31f002c384856fb0bdbf61c03bd8442a6cf07b77d0eb9acf9da9508"
+    },
+    "telegram-bot": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/telegram-bot/SKILL.md",
+      "computedHash": "d22a01d8c4c3908fee9e5d24363253ca802f7755825f05feb878c51a70f9107a"
+    },
+    "thread-writer": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/thread-writer/SKILL.md",
+      "computedHash": "18b81f23bef7e680f83fdb2c12a7291c386ea6e699d2e8da014e67356d1c6da8"
+    },
+    "unsplash-image": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/stock-images/SKILL.md",
+      "computedHash": "953a6c637da2120c43d97e420825df9613e50137904bbe26e01f058bc874b513"
+    },
+    "video-ad-analysis": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/video-ad-analysis/SKILL.md",
+      "computedHash": "1a64a25b140deed962ce42d6f35234a69afe2bb20a61e819cf61d96db9c5dfe4"
+    },
+    "wechat-moments": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/wechat-moments/SKILL.md",
+      "computedHash": "523ea035fed4f0cfba8d1c956ea97806b0b20c4c81aba1d0735eeeaee27a6183"
+    },
+    "write-blog": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/write-blog/SKILL.md",
+      "computedHash": "6bc8e462f41c1468abfe3ae1679a02b075975230cb23a2f35e6fdf3bd66f9a91"
+    },
+    "write-landing": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/write-landing/SKILL.md",
+      "computedHash": "598f7fe56d4b40ae0872bc61437252b6c95b1da9ff3f421c3552461b6ae2f72a"
+    },
+    "youtube-analytics": {
+      "source": "OpenClaudia/openclaudia-skills",
+      "sourceType": "github",
+      "skillPath": "skills/youtube-analytics/SKILL.md",
+      "computedHash": "17551b784880978c1508cfdfd511b071d0f312ebf41943b68476176f15aefcc5"
+    }
+  }
+}
