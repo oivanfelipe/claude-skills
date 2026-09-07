@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "composio": {
+      "type": "http",
+      "url": "https://connect.composio.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer ${COMPOSIO_API_KEY}"
+      }
+    }
+  }
+}
