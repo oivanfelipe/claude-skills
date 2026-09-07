@@ -4,7 +4,7 @@
       "type": "http",
       "url": "https://connect.composio.dev/mcp",
       "headers": {
-        "Authorization": "Bearer ${COMPOSIO_API_KEY}"
+        "Authorization": "Bearer ${ck_u9JqrdliJ8thLePWlbeh}"
       }
     }
   }
