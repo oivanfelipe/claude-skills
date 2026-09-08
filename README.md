@@ -16,6 +16,21 @@ Esta pasta é a localização real usada pelo CLI (`~/.agents/skills/`). O Claud
 - **planejamento-estrategico** — skill própria (autoria do usuário), metodologia completa de planejamento estratégico de marketing: diagnóstico de maturidade digital, objetivo, personas, canais, quatro pilares (aquisição/engajamento/monetização/retenção), execução, mensuração, projeção e apresentação HTML no padrão visual V4.
 - **frontend-design** ([anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/frontend-design)) — direção estética e escolhas visuais intencionais ao construir ou redesenhar UI.
 - **superpowers** — instalado como plugin (não skill) via `claude plugin install superpowers@claude-plugins-official`, do marketplace oficial da Anthropic. Não faz parte desta pasta/repo; gerenciado pelo próprio `claude plugin`.
+- **composio** ([ComposioHQ/composio](https://github.com/ComposioHQ/composio)) — integração com 500+ apps (Gmail, Slack, GitHub, Notion, Linear, etc.) via Composio For You (MCP/CLI) e Composio Platform (SDK). Requer configuração global do MCP server — veja abaixo.
+
+## MCP servers globais
+
+Alguns recursos exigem configuração no `~/.claude/settings.json` da sua máquina, não só a skill.
+
+### Composio
+
+Após clonar ou sincronizar este repo, execute uma vez para configurar globalmente:
+
+```bash
+COMPOSIO_API_KEY=ck_... bash ~/.agents/skills/setup-global-mcp.sh
+```
+
+O script adiciona o MCP server `https://connect.composio.dev/mcp` ao `~/.claude/settings.json` e salva a chave em `~/.claude/settings.local.json` (não commitado). Após isso, o Composio estará disponível em **qualquer repositório** sem configuração adicional.
 
 ## Instalando uma skill nova
 
