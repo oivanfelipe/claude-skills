@@ -76,9 +76,90 @@ Executar pesquisa nas fontes abaixo, nesta ordem. Registrar tudo o que for
 encontrado. Se uma fonte não existir ou não for encontrada, registrar "Não
 encontrado" — nunca inventar ou inferir.
 
+### Protocolo de Acesso — Agent Reach
+
+Para cada fonte, usar o **Agent Reach** sempre que disponível. Antes de iniciar,
+rodar `agent-reach doctor --json` para saber quais backends estão ativos.
+
+**Roteamento por plataforma:**
+
+| Plataforma | Comando preferencial | Fallback |
+|---|---|---|
+| Qualquer site | `curl -s "https://r.jina.ai/URL"` | `web_fetch URL` |
+| Instagram | `opencli instagram profile @handle` | ver instruções abaixo |
+| LinkedIn empresa | `mcp__linkedin__get_company_profile` | `curl -s "https://r.jina.ai/linkedin.com/company/slug"` |
+| LinkedIn fundador | `mcp__linkedin__get_person_profile` | busca pelo nome |
+| YouTube | `yt-dlp --write-auto-sub --skip-download -o "/tmp/%(id)s" URL` | `web_fetch URL` |
+| Twitter/X | `twitter user-posts @handle -n 20` | `web_search "@handle twitter"` |
+| Facebook (Ads Library) | `opencli facebook search "marca" -f yaml` | `web_fetch "facebook.com/ads/library?..."` |
+| Reddit | `opencli reddit search "marca" -f yaml` | `web_search "marca site:reddit.com"` |
+
+**Se um comando falhar ou o backend não estiver ativo**, aplicar o protocolo
+de fallback abaixo e registrar `[FALLBACK USADO]` na seção correspondente do
+briefing para que o time saiba que aquela informação veio de fonte secundária.
+
+### Protocolo de Fallback por Plataforma
+
+#### Instagram — backend indisponível
+
+Se `opencli instagram profile` falhar ou OpenCLI não estiver ativo:
+
+1. Tentar `curl -s "https://r.jina.ai/https://www.instagram.com/@handle/"` — extrai bio e dados públicos
+2. Se retornar bloqueio/login wall, tentar `web_search "@handle instagram seguidores posts"` para dados aproximados
+3. Se tudo falhar, registrar como **[REQUER AÇÃO]** e exibir ao usuário:
+
+> **Instagram bloqueado — ação necessária**
+> Para ler o Instagram diretamente, você precisa do OpenCLI instalado no seu Chrome local.
+> Passos (uma vez):
+> 1. Instale a extensão **OpenCLI** em https://opencli.com
+> 2. Faça login no Instagram no mesmo Chrome
+> 3. Rode novamente o kickoff — o canal estará ativo automaticamente
+> Alternativa imediata: abra `instagram.com/@handle` e me cole as informações do perfil aqui.
+
+#### Facebook / Ads Library — backend indisponível
+
+Se `opencli facebook` falhar:
+
+1. Tentar `web_fetch "https://www.facebook.com/ads/library/?search_term=NOME_MARCA&country=BR"`
+2. Se bloqueado, tentar `curl -s "https://r.jina.ai/https://www.facebook.com/ads/library/?search_term=NOME_MARCA"`
+3. Se tudo falhar, registrar como **[REQUER AÇÃO]** e exibir:
+
+> **Meta Ads Library bloqueada — ação necessária**
+> Opção A (sem instalar nada): Acesse https://www.facebook.com/ads/library/?search_term=NOME_CLIENTE, tire prints ou cole o texto aqui.
+> Opção B (permanente): Instale a extensão **OpenCLI** no Chrome com Facebook aberto e logado.
+
+#### Twitter/X — cookies não configurados
+
+Se `twitter user-posts` falhar com erro de autenticação:
+
+1. Tentar `web_search "@handle twitter posts recentes"` para dados aproximados
+2. Registrar como **[REQUER AÇÃO]** e exibir:
+
+> **Twitter/X requer autenticação — ação necessária**
+> Para ativar definitivamente:
+> 1. No Chrome/Firefox, instale a extensão **Cookie-Editor** (https://cookie-editor.com)
+> 2. Acesse twitter.com logado na sua conta
+> 3. Cookie-Editor → Export as JSON → copie os valores de `auth_token` e `ct0`
+> 4. Me envie: "Configura Twitter: auth_token=XXX ct0=YYY"
+> Alternativa imediata: acesse o perfil manualmente e cole as informações aqui.
+
+#### LinkedIn — sessão expirada ou não autenticado
+
+Se `mcp__linkedin__get_company_profile` retornar erro de sessão:
+
+1. Tentar `curl -s "https://r.jina.ai/https://www.linkedin.com/company/SLUG"` — funciona para dados públicos
+2. Se insuficiente, registrar como **[REQUER AÇÃO]** e exibir:
+
+> **LinkedIn requer novo login — ação necessária**
+> Execute no seu terminal: `uvx mcp-server-linkedin@latest --login`
+> Vai abrir uma tela de login do LinkedIn. Após autenticar, o canal fica ativo permanentemente.
+
+---
+
 ### 1.1 Site do Cliente
 
-Acessar a URL fornecida com `web_fetch`. Analisar:
+Usar Agent Reach: `curl -s "https://r.jina.ai/URL_DO_CLIENTE"` para extração
+completa do conteúdo. Complementar com `web_fetch URL` se necessário. Analisar:
 
 - **Home:** proposta de valor, headline principal, subheadline, CTA principal
 - **Estrutura:** quantas páginas relevantes, como organiza os produtos/serviços
@@ -91,6 +172,8 @@ Acessar a URL fornecida com `web_fetch`. Analisar:
 
 ### 1.2 Instagram
 
+Usar Agent Reach: `opencli instagram profile @handle -f yaml`
+Se falhar, aplicar o **Protocolo de Fallback — Instagram** acima.
 Buscar o perfil via `web_search` se o link não foi fornecido. Analisar:
 
 - **Bio:** como se posiciona em 150 caracteres, link na bio (para onde manda)
@@ -105,7 +188,9 @@ Buscar o perfil via `web_search` se o link não foi fornecido. Analisar:
 
 ### 1.3 Meta Ads Library
 
-Buscar em `https://www.facebook.com/ads/library` o nome da marca ou página.
+Usar Agent Reach: `opencli facebook search "NOME_MARCA" -f yaml`
+Complementar com: `web_fetch "https://www.facebook.com/ads/library/?search_term=NOME_MARCA&country=BR"`
+Se falhar, aplicar o **Protocolo de Fallback — Facebook / Ads Library** acima.
 Analisar:
 
 - **Status:** o cliente está veiculando anúncios?
@@ -118,7 +203,12 @@ Analisar:
 
 ### 1.4 LinkedIn
 
-Buscar a página da empresa e o perfil do fundador/sócio principal. Analisar:
+Usar Agent Reach MCP:
+- Empresa: `mcp__linkedin__get_company_profile company_name="NOME" sections="posts,jobs"`
+- Fundador: `mcp__linkedin__get_person_profile linkedin_username="USERNAME"`
+- Vagas: `mcp__linkedin__search_jobs keywords="EMPRESA" max_pages=1`
+Se falhar, aplicar o **Protocolo de Fallback — LinkedIn** acima.
+Analisar:
 
 **Empresa:**
 - Seguidores, setor declarado, tamanho da empresa
