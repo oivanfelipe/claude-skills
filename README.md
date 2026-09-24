@@ -15,6 +15,8 @@ Esta pasta é a localização real usada pelo CLI (`~/.agents/skills/`). O Claud
 - **claude-code-setup** — instalado como plugin (não skill) via `claude plugin install claude-code-setup@claude-plugins-official`, do marketplace oficial da Anthropic. Não faz parte desta pasta/repo; gerenciado pelo próprio `claude plugin`.
 - **planejamento-estrategico** — skill própria (autoria do usuário), metodologia completa de planejamento estratégico de marketing: diagnóstico de maturidade digital, objetivo, personas, canais, quatro pilares (aquisição/engajamento/monetização/retenção), execução, mensuração, projeção e apresentação HTML no padrão visual V4.
 - **frontend-design** ([anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/frontend-design)) — direção estética e escolhas visuais intencionais ao construir ou redesenhar UI.
+- **html-presentation** ([mathews-tom/armory](https://github.com/mathews-tom/armory)) — converte documentos, outlines ou notas em apresentações HTML autocontidas (Reveal.js horizontal ou scroll vertical), com múltiplos temas.
+- **performance-optimizer** ([davila7/claude-code-templates](https://github.com/davila7/claude-code-templates/tree/main/cli-tool/components/skills/productivity/performance-optimizer)) — identifica e corrige gargalos de performance em código, bancos de dados e APIs, medindo antes/depois para comprovar os ganhos.
 - **superpowers** — instalado como plugin (não skill) via `claude plugin install superpowers@claude-plugins-official`, do marketplace oficial da Anthropic. Não faz parte desta pasta/repo; gerenciado pelo próprio `claude plugin`.
 
 ## Instalando uma skill nova
