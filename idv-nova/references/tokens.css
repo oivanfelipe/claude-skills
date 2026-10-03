@@ -1,0 +1,113 @@
+/* Cartaz Editorial: tokens
+   Três cores, uma família tipográfica, escala de espaçamento fechada, sombras sólidas. */
+
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&display=swap");
+
+:root {
+  /* Cor */
+  --preto: #000000;
+  --branco: #ffffff;
+  --vermelho: #e10600;
+
+  /* Papéis semânticos (sempre trocar aqui, nunca nos componentes) */
+  --fundo: var(--branco);
+  --texto: var(--preto);
+  --borda: var(--preto);
+  --acao: var(--vermelho);
+  --acao-texto: var(--branco);
+
+  /* Tipografia */
+  --fonte: "Archivo", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --peso-black: 900;
+  --peso-extra: 800;
+  --peso-bold: 700;
+  --peso-medium: 500;
+  --peso-regular: 400;
+
+  /* Escala tipográfica (mobile primeiro, cresce com clamp) */
+  --t-display: clamp(3rem, 9vw, 7rem);     /* título de impacto */
+  --t-numero: clamp(3rem, 8vw, 6rem);      /* número de métrica */
+  --t-h1: clamp(2.25rem, 5vw, 4rem);
+  --t-h2: clamp(1.75rem, 3.5vw, 2.5rem);
+  --t-h3: 1.25rem;
+  --t-corpo: 1rem;
+  --t-pequeno: 0.8125rem;
+  --entrelinha-titulo: 0.95;
+  --entrelinha-corpo: 1.5;
+  --tracking-titulo: -0.02em;
+  --tracking-rotulo: 0.08em;
+
+  /* Espaçamento (somente estes valores) */
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 24px;
+  --e-6: 32px;
+  --e-7: 48px;
+  --e-8: 64px;
+
+  /* Bordas e cantos */
+  --borda-fina: 1px solid var(--preto);
+  --borda-forte: 2px solid var(--preto);
+  --raio: 0;
+  --raio-suave: 4px;
+
+  /* Sombras sólidas (nunca com blur) */
+  --sombra-s: 3px 3px 0 var(--preto);
+  --sombra-m: 6px 6px 0 var(--preto);
+  --sombra-g: 10px 10px 0 var(--preto);
+  --sombra-baixo: 0 6px 0 var(--preto);
+
+  /* Foco */
+  --foco: 3px solid var(--preto);
+  --foco-offset: 2px;
+
+  /* Layout */
+  --largura-max: 1200px;
+  --area-toque: 44px;
+}
+
+/* Seção invertida: fundo preto, texto branco. Vermelho permanece igual. */
+.invertido {
+  --fundo: var(--preto);
+  --texto: var(--branco);
+  --borda: var(--branco);
+  --sombra-m: 6px 6px 0 var(--branco);
+  background: var(--fundo);
+  color: var(--texto);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--fonte);
+  font-weight: var(--peso-regular);
+  font-size: var(--t-corpo);
+  line-height: var(--entrelinha-corpo);
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: var(--peso-black);
+  line-height: var(--entrelinha-titulo);
+  letter-spacing: var(--tracking-titulo);
+}
+
+:focus-visible {
+  outline: var(--foco);
+  outline-offset: var(--foco-offset);
+}
+.invertido :focus-visible { outline-color: var(--branco); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

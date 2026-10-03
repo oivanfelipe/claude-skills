@@ -37,3 +37,4 @@ cd ~/.agents/skills && npx skills experimental_sync -y
 Este repositório garante que as skills globais sobrevivam e sejam versionadas — e permite reinstalá-las em qualquer máquina local via `git clone` + `experimental_sync`.
 
 Ele **não** alimenta automaticamente sessões cloud/remotas do Claude Code (`isolation: "remote"`), porque esses ambientes partem de um checkout do repositório do *projeto*, não da sua pasta pessoal `~/.agents`. Para uma skill específica funcionar também em sessões remotas de um projeto, instale-a também no escopo do projeto (`npx skills add <owner>/<repo>` sem `-g`, dentro do repositório daquele projeto) e faça commit da pasta `.agents/skills/` ali.
+- **idv-nova** — design system de interface em preto, branco e vermelho (cartaz editorial contemporâneo: tipografia pesada, blocos geométricos, sombras sólidas), com tokens CSS, receitas de componentes e página de preview.

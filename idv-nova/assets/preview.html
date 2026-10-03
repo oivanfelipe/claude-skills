@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartaz Editorial: pré-visualização do sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* Cartaz Editorial: tokens
+   Três cores, uma família tipográfica, escala de espaçamento fechada, sombras sólidas. */
+
+
+:root {
+  /* Cor */
+  --preto: #000000;
+  --branco: #ffffff;
+  --vermelho: #e10600;
+
+  /* Papéis semânticos (sempre trocar aqui, nunca nos componentes) */
+  --fundo: var(--branco);
+  --texto: var(--preto);
+  --borda: var(--preto);
+  --acao: var(--vermelho);
+  --acao-texto: var(--branco);
+
+  /* Tipografia */
+  --fonte: "Archivo", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --peso-black: 900;
+  --peso-extra: 800;
+  --peso-bold: 700;
+  --peso-medium: 500;
+  --peso-regular: 400;
+
+  /* Escala tipográfica (mobile primeiro, cresce com clamp) */
+  --t-display: clamp(3rem, 9vw, 7rem);     /* título de impacto */
+  --t-numero: clamp(3rem, 8vw, 6rem);      /* número de métrica */
+  --t-h1: clamp(2.25rem, 5vw, 4rem);
+  --t-h2: clamp(1.75rem, 3.5vw, 2.5rem);
+  --t-h3: 1.25rem;
+  --t-corpo: 1rem;
+  --t-pequeno: 0.8125rem;
+  --entrelinha-titulo: 0.95;
+  --entrelinha-corpo: 1.5;
+  --tracking-titulo: -0.02em;
+  --tracking-rotulo: 0.08em;
+
+  /* Espaçamento (somente estes valores) */
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 24px;
+  --e-6: 32px;
+  --e-7: 48px;
+  --e-8: 64px;
+
+  /* Bordas e cantos */
+  --borda-fina: 1px solid var(--preto);
+  --borda-forte: 2px solid var(--preto);
+  --raio: 0;
+  --raio-suave: 4px;
+
+  /* Sombras sólidas (nunca com blur) */
+  --sombra-s: 3px 3px 0 var(--preto);
+  --sombra-m: 6px 6px 0 var(--preto);
+  --sombra-g: 10px 10px 0 var(--preto);
+  --sombra-baixo: 0 6px 0 var(--preto);
+
+  /* Foco */
+  --foco: 3px solid var(--preto);
+  --foco-offset: 2px;
+
+  /* Layout */
+  --largura-max: 1200px;
+  --area-toque: 44px;
+}
+
+/* Seção invertida: fundo preto, texto branco. Vermelho permanece igual. */
+.invertido {
+  --fundo: var(--preto);
+  --texto: var(--branco);
+  --borda: var(--branco);
+  --sombra-m: 6px 6px 0 var(--branco);
+  background: var(--fundo);
+  color: var(--texto);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--fonte);
+  font-weight: var(--peso-regular);
+  font-size: var(--t-corpo);
+  line-height: var(--entrelinha-corpo);
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: var(--peso-black);
+  line-height: var(--entrelinha-titulo);
+  letter-spacing: var(--tracking-titulo);
+}
+
+:focus-visible {
+  outline: var(--foco);
+  outline-offset: var(--foco-offset);
+}
+.invertido :focus-visible { outline-color: var(--branco); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---- Componentes ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--e-2);min-height:var(--area-toque);padding:var(--e-3) var(--e-5);font:var(--peso-extra) .9375rem/1 var(--fonte);text-transform:uppercase;letter-spacing:var(--tracking-rotulo);border:var(--borda-forte);border-radius:var(--raio);box-shadow:var(--sombra-m);cursor:pointer;transition:transform 80ms linear,box-shadow 80ms linear;text-decoration:none}
+.btn:hover{transform:translate(2px,2px);box-shadow:4px 4px 0 var(--preto)}
+.btn:active{transform:translate(6px,6px);box-shadow:0 0 0 var(--preto)}
+.btn--primario{background:var(--vermelho);color:var(--branco);border-color:var(--preto)}
+.btn--secundario{background:var(--preto);color:var(--branco)}
+.btn--claro{background:var(--branco);color:var(--preto)}
+.invertido .btn--claro{border-color:var(--branco)}
+.card{background:var(--branco);color:var(--preto);border:var(--borda-forte);box-shadow:var(--sombra-m);padding:var(--e-5)}
+.card--preto{background:var(--preto);color:var(--branco);box-shadow:6px 6px 0 var(--vermelho)}
+.rotulo{margin:0;font:var(--peso-bold) var(--t-pequeno)/1 var(--fonte);text-transform:uppercase;letter-spacing:var(--tracking-rotulo)}
+.valor{margin:var(--e-2) 0;font:var(--peso-black) var(--t-numero)/var(--entrelinha-titulo) var(--fonte);letter-spacing:var(--tracking-titulo)}
+.variacao{display:inline-block;margin:0;padding:var(--e-1) var(--e-2);background:var(--vermelho);color:var(--branco);font:var(--peso-black) 1.125rem/1 var(--fonte)}
+.selo{display:inline-flex;align-items:center;min-width:24px;height:24px;padding:0 var(--e-2);background:var(--vermelho);color:var(--branco);font:var(--peso-black) .75rem/1 var(--fonte)}
+.aviso{border:var(--borda-forte);border-left:12px solid var(--vermelho);padding:var(--e-4);background:var(--branco);box-shadow:var(--sombra-s)}
+.aviso strong{font-weight:var(--peso-black)}
+
+/* ---- Layout ---- */
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.lateral{background:var(--preto);color:var(--branco);padding:var(--e-6) var(--e-4);display:flex;flex-direction:column;gap:var(--e-6)}
+.marca{font:var(--peso-black) 1.5rem/1 var(--fonte);text-transform:uppercase;letter-spacing:var(--tracking-titulo)}
+.nav{display:grid;gap:var(--e-1)}
+.nav a{display:flex;justify-content:space-between;align-items:center;padding:var(--e-3) var(--e-4);color:var(--branco);text-decoration:none;font:var(--peso-extra) .9375rem/1 var(--fonte);text-transform:uppercase;letter-spacing:var(--tracking-rotulo);border-left:6px solid transparent}
+.nav a:hover{border-left-color:var(--branco)}
+.nav a[aria-current="page"]{border-left-color:var(--vermelho);background:var(--branco);color:var(--preto)}
+main{padding:var(--e-7) var(--e-6);max-width:var(--largura-max)}
+.topo{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:var(--e-5);margin-bottom:var(--e-7)}
+.titulo{font-size:var(--t-display);text-transform:uppercase}
+.grade{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--e-5)}
+.c8{grid-column:span 8}.c4{grid-column:span 4}.c7{grid-column:span 7}.c5{grid-column:span 5}
+.invade{margin-top:-24px;margin-left:24px;position:relative;z-index:2}
+.barras{display:flex;align-items:flex-end;gap:var(--e-2);height:140px;border-bottom:var(--borda-forte);margin-top:var(--e-4)}
+.barras i{flex:1;background:var(--preto)}
+.barras i.on{background:var(--vermelho)}
+.campo{display:grid;gap:var(--e-2)}
+.campo input{min-height:var(--area-toque);padding:var(--e-3) var(--e-4);font:var(--peso-medium) 1rem/1.4 var(--fonte);border:var(--borda-forte);background:var(--branco);color:var(--preto)}
+.campo input:focus{box-shadow:var(--sombra-s)}
+.acoes{display:flex;flex-wrap:wrap;gap:var(--e-4);margin-top:var(--e-5)}
+h2{font-size:var(--t-h2);text-transform:uppercase}
+.secao{margin-top:var(--e-8)}
+
+@media (max-width:768px){
+  .app{grid-template-columns:1fr}
+  .lateral{flex-direction:row;align-items:center;justify-content:space-between;padding:var(--e-4)}
+  .nav{display:none}
+  main{padding:var(--e-5) var(--e-4)}
+  .grade{grid-template-columns:1fr;gap:var(--e-4)}
+  .c8,.c4,.c7,.c5{grid-column:auto}
+  .invade{margin:0}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="lateral">
+    <div class="marca">Produto</div>
+    <nav class="nav" aria-label="Principal">
+      <a href="#" aria-current="page">Painel</a>
+      <a href="#">Campanhas <span class="selo">3</span></a>
+      <a href="#">Relatórios</a>
+      <a href="#">Equipe</a>
+    </nav>
+    <a class="btn btn--primario" href="#">Nova campanha</a>
+  </aside>
+
+  <main>
+    <header class="topo">
+      <h1 class="titulo">Resultado<br>do mês</h1>
+      <a class="btn btn--secundario" href="#">Exportar relatório</a>
+    </header>
+
+    <section class="grade" aria-label="Métricas">
+      <article class="card c8">
+        <p class="rotulo">Faturamento</p>
+        <p class="valor">R$ 184.500</p>
+        <p class="variacao">+18,4%</p>
+        <div class="barras" role="img" aria-label="Faturamento por semana, a última semana em destaque">
+          <i style="height:38%"></i><i style="height:52%"></i><i style="height:45%"></i><i style="height:64%"></i><i style="height:58%"></i><i style="height:78%"></i><i class="on" style="height:100%"></i>
+        </div>
+      </article>
+      <div class="c4" style="display:grid;gap:24px;align-content:start">
+        <article class="card card--preto">
+          <p class="rotulo">Custo por lead</p>
+          <p class="valor" style="font-size:3rem">R$ 32,10</p>
+          <p class="rotulo">Meta: R$ 35,00</p>
+        </article>
+        <article class="card invade">
+          <p class="rotulo">Leads qualificados</p>
+          <p class="valor" style="font-size:3rem">1.284</p>
+          <p class="rotulo">Taxa: 21,7%</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="secao grade" aria-label="Ação e formulário">
+      <div class="c7">
+        <h2>Ajustar meta</h2>
+        <div class="campo" style="margin-top:24px">
+          <label class="rotulo" for="meta">Meta de faturamento</label>
+          <input id="meta" value="R$ 200.000">
+        </div>
+        <div class="acoes">
+          <button class="btn btn--primario">Salvar meta</button>
+          <button class="btn btn--claro">Cancelar</button>
+        </div>
+      </div>
+      <div class="c5">
+        <div class="aviso"><strong>Orçamento quase no limite.</strong> Faltam R$ 4.200 para o teto do mês. Aumente o teto ou pause uma campanha.</div>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>
