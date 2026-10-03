@@ -1,5 +1,5 @@
 ---
-name: cartaz-editorial
+name: idv-nova
 description: Design system de interface em preto, branco e vermelho com linguagem de cartaz editorial contemporâneo (tipografia pesada, blocos geométricos, sombras sólidas, composição assimétrica). Use sempre que o usuário pedir para criar, reformular ou padronizar a interface de um aplicativo, dashboard, painel, landing page ou componente seguindo essa identidade visual, ou mencionar "cartaz editorial", "preto branco e vermelho", "sombra sólida", "identidade visual do projeto" ou "design system da marca".
 ---
 
