@@ -1,0 +1,87 @@
+{
+  "marca": {
+    "assinatura": "V4 Carvalho & Co",
+    "marcaMae": "V4 Company"
+  },
+  "claro": {
+    "branco": "#FFFFFF",
+    "preto": "#111111",
+    "vermelho": "#C00000",
+    "vermelhoEscuro": "#A30400",
+    "vinho": "#6B0000",
+    "cinzaEscuro": "#595959",
+    "cinzaMedio": "#737373",
+    "cinzaClaro": "#8C8C8C",
+    "borda": "#D9D9D9",
+    "card": "#F5F5F5"
+  },
+  "semantica": {
+    "positivo": "#177230",
+    "negativo": "#C00000",
+    "atencao": "#A35F00",
+    "neutro": "#595959"
+  },
+  "tintas": {
+    "positiva": "#E6F4EA",
+    "negativa": "#FFF5F5",
+    "atencao": "#FFF8E1",
+    "neutra": "#F0F0F0"
+  },
+  "escuro": {
+    "bg": "#0A0A0A",
+    "surface": "#141414",
+    "divisor": "#1C1C1C",
+    "racing": "#E10600",
+    "racingClaro": "#FF4A45",
+    "texto2": "#B8B8B8",
+    "texto3": "#9A9A9A",
+    "positivo": "#19C37D",
+    "atencao": "#FFB020"
+  },
+  "dataviz": {
+    "destaqueMaisNeutros": ["#C00000", "#111111", "#595959", "#8C8C8C", "#C4C4C4"],
+    "categorica": ["#C00000", "#111111", "#0F6E7A", "#A35F00", "#5B3A8E", "#177230"],
+    "sequencial": ["#FFF0F0", "#F8C9C9", "#E88585", "#D13A3A", "#C00000", "#6B0000"],
+    "divergente": ["#C00000", "#E88585", "#E8E8E8", "#7FBF92", "#177230"],
+    "eixo": "#737373",
+    "gridline": "#D9D9D9",
+    "rotulo": "#595959"
+  },
+  "tipografia": {
+    "office": {
+      "display": "Oswald",
+      "texto": "Arial",
+      "tamanhos": {
+        "cabecalho": 14,
+        "titulo": 22,
+        "numeroDestaque": 36,
+        "corpo": 14,
+        "assinatura": 10
+      }
+    },
+    "web": {
+      "display": "Bebas Neue",
+      "texto": "Inter",
+      "tecnica": "Space Grotesk",
+      "googleFonts": "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;700&display=swap"
+    }
+  },
+  "espacamento": {
+    "base": 8,
+    "escala": [8, 16, 24, 32, 48, 64, 96],
+    "raioCard": 8,
+    "raioBadge": 4,
+    "acentoLargura": 4,
+    "margemSlidePol": { "lateral": 0.5, "topoBase": 0.4 },
+    "margemA4Cm": { "lateral": 2.5, "topoBase": 2.0 }
+  },
+  "regras": {
+    "fundoPadrao": "branco",
+    "escuroPermitidoEm": ["capa", "separador-secao", "encerramento", "impacto"],
+    "paresProibidos": [
+      { "texto": "#111111", "fundo": "#C00000", "contraste": 2.91 },
+      { "texto": "#C00000", "fundo": "#0A0A0A", "contraste": 3.06 }
+    ],
+    "contrasteMinimo": { "corpo": 4.5, "textoGrande": 3.0 }
+  }
+}

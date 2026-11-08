@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identidade Visual V4 — Carvalho &amp; Co</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="v4-tokens.css">
+<style>
+  /* Apenas o layout desta página de exemplo. Os tokens vivem em v4-tokens.css. */
+  .wrap   { width: min(1120px, 92vw); margin-inline: auto; }
+  section { padding-block: var(--v4-sp-8); }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--v4-sp-3); }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--v4-sp-3); }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--v4-sp-6); }
+  @media (max-width: 900px) { .grid-3, .grid-4, .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .grid-3, .grid-4, .grid-2 { grid-template-columns: 1fr; } }
+
+  .swatch      { border-radius: var(--v4-raio-card); overflow: hidden; border: 1px solid var(--v4-borda); }
+  .swatch__cor { height: 88px; }
+  .swatch__txt { padding: 12px; background: var(--v4-branco); }
+  .swatch__nome{ font-weight: 700; font-size: 14px; }
+  .swatch__hex { font-family: var(--v4-font-tecnica); font-size: 12px; color: var(--v4-cinza-medio); }
+  .swatch__ctr { font-family: var(--v4-font-tecnica); font-size: 11px; color: var(--v4-cinza-medio); margin-top: 4px; }
+
+  .hero { min-height: 78vh; display: flex; flex-direction: column; justify-content: flex-end; padding-block: var(--v4-sp-8); }
+  .hero__assinatura { display: flex; justify-content: space-between; margin-top: var(--v4-sp-6);
+                      font-family: var(--v4-font-display); letter-spacing: .06em; font-size: 15px; }
+  .rodape { border-top: 1px solid var(--v4-borda); padding-block: var(--v4-sp-3);
+            display: flex; justify-content: space-between; font-size: 13px; color: var(--v4-cinza-medio); }
+  .assinatura-topo { text-align: right; font-family: var(--v4-font-display); letter-spacing: .06em;
+                     font-size: 14px; padding-top: var(--v4-sp-2); }
+  .nota { font-size: 13px; font-style: italic; color: var(--v4-cinza-medio); margin-top: var(--v4-sp-2); }
+  .stack > * + * { margin-top: var(--v4-sp-2); }
+  .proibido { border-left: var(--v4-acento-w) solid var(--v4-preto); padding-left: var(--v4-sp-2); }
+</style>
+</head>
+<body>
+
+<!-- ============ CAPA / IMPACTO — a exceção escura ============ -->
+<div class="v4-dark">
+  <div class="wrap hero">
+    <p class="v4-eyebrow">Manual de aplicação</p>
+    <hr class="v4-regua">
+    <h1 class="v4-titulo-display" style="margin:0">IDENTIDADE<br>VISUAL</h1>
+    <p class="v4-subtitulo" style="max-width:56ch">
+      Fundo branco, preto no texto, vermelho como acento. O escuro existe só aqui:
+      capa, separador de seção e encerramento.
+    </p>
+    <div class="hero__assinatura">
+      <span>Cliente</span>
+      <span>V4 Carvalho &amp; Co</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTEÚDO — o padrão ============ -->
+<div class="wrap assinatura-topo">V4 Carvalho &amp; Co</div>
+
+<section class="wrap">
+  <p class="v4-eyebrow">01 // Paleta</p>
+  <hr class="v4-regua">
+  <h2>As cores e o que cada uma resolve</h2>
+  <p class="v4-subtitulo">Contraste medido sobre fundo branco pela fórmula WCAG 2.1.</p>
+
+  <div class="grid-4" style="margin-top:var(--v4-sp-4)">
+    <div class="swatch"><div class="swatch__cor" style="background:#111111"></div>
+      <div class="swatch__txt"><div class="swatch__nome">Preto principal</div>
+      <div class="swatch__hex">#111111</div><div class="swatch__ctr">18,88:1 · AAA</div></div></div>
+
+    <div class="swatch"><div class="swatch__cor" style="background:#C00000"></div>
+      <div class="swatch__txt"><div class="swatch__nome">Vermelho V4</div>
+      <div class="swatch__hex">#C00000</div><div class="swatch__ctr">6,48:1 · AA</div></div></div>
+
+    <div class="swatch"><div class="swatch__cor" style="background:#595959"></div>
+      <div class="swatch__txt"><div class="swatch__nome">Cinza escuro</div>
+      <div class="swatch__hex">#595959</div><div class="swatch__ctr">7,00:1 · AAA</div></div></div>
+
+    <div class="swatch"><div class="swatch__cor" style="background:#737373"></div>
+      <div class="swatch__txt"><div class="swatch__nome">Cinza médio</div>
+      <div class="swatch__hex">#737373</div><div class="swatch__ctr">4,74:1 · AA</div></div></div>
+
+    <div class="swatch"><div class="swatch__cor" style="background:#6B0000"></div>
+      <div class="swatch__txt"><div class="swatch__nome">Vinho</div>
+      <div class="swatch__hex">#6B0000</div><div class="swatch__ctr">12,92:1 · AAA</div></div></div>
+
+    <div class="swatch"><div class="swatch__cor" style="background:#177230"></div>
+      <div class="swatch__txt"><div class="swatch__nome">Positivo</div>
+      <div class="swatch__hex">#177230</div><div class="swatch__ctr">6,02:1 · AA</div></div></div>
+
+    <div class="swatch"><div class="swatch__cor" style="background:#A35F00"></div>
+      <div class="swatch__txt"><div class="swatch__nome">Atenção</div>
+      <div class="swatch__hex">#A35F00</div><div class="swatch__ctr">5,01:1 · AA</div></div></div>
+
+    <div class="swatch"><div class="swatch__cor" style="background:#F5F5F5;border-bottom:1px solid #D9D9D9"></div>
+      <div class="swatch__txt"><div class="swatch__nome">Card</div>
+      <div class="swatch__hex">#F5F5F5</div><div class="swatch__ctr">superfície, não texto</div></div></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="v4-eyebrow">02 // Indicadores</p>
+  <hr class="v4-regua">
+  <h2>Um destaque por tela, nunca dois</h2>
+  <p class="v4-subtitulo">O KPI que sustenta o argumento é o único em vermelho.</p>
+
+  <div class="grid-4" style="margin-top:var(--v4-sp-4)">
+    <div><div class="v4-kpi-label">Investimento</div>
+      <div class="v4-kpi-valor v4-kpi-valor--tile">R$ 84k</div>
+      <span class="v4-badge v4-badge--neutro">— estável</span></div>
+    <div><div class="v4-kpi-label">CAC</div>
+      <div class="v4-kpi-valor v4-kpi-valor--tile v4-kpi-valor--destaque">R$ 184</div>
+      <span class="v4-badge v4-badge--negativo">▲ 41% vs. jan</span></div>
+    <div><div class="v4-kpi-label">Ticket médio</div>
+      <div class="v4-kpi-valor v4-kpi-valor--tile">R$ 1.290</div>
+      <span class="v4-badge v4-badge--positivo">▲ 6% vs. jan</span></div>
+    <div><div class="v4-kpi-label">ROAS</div>
+      <div class="v4-kpi-valor v4-kpi-valor--tile">4,1x</div>
+      <span class="v4-badge v4-badge--atencao">▼ 0,8 vs. meta</span></div>
+  </div>
+  <p class="nota">Todo delta carrega seta e sinal — a cor nunca é o único portador do significado.</p>
+</section>
+
+<section class="wrap">
+  <p class="v4-eyebrow">03 // Gráfico</p>
+  <hr class="v4-regua">
+  <h2>Série em destaque, resto em cinza</h2>
+  <p class="v4-subtitulo">Gridline horizontal apenas, rótulo direto na série, sem legenda.</p>
+
+  <svg viewBox="0 0 720 300" style="width:100%;height:auto;margin-top:var(--v4-sp-3)" role="img"
+       aria-label="Evolução do CAC contra a meta, de janeiro a junho. O CAC sobe de 130 para 184 reais enquanto a meta permanece em 140.">
+    <g stroke="#D9D9D9" stroke-width="1">
+      <line x1="56" y1="40"  x2="640" y2="40"/>
+      <line x1="56" y1="100" x2="640" y2="100"/>
+      <line x1="56" y1="160" x2="640" y2="160"/>
+      <line x1="56" y1="220" x2="640" y2="220"/>
+    </g>
+    <g font-family="Inter, sans-serif" font-size="13" fill="#595959" text-anchor="end">
+      <text x="46" y="45">200</text><text x="46" y="105">170</text>
+      <text x="46" y="165">140</text><text x="46" y="225">110</text>
+    </g>
+    <g font-family="Inter, sans-serif" font-size="13" fill="#595959" text-anchor="middle">
+      <text x="80"  y="248">jan</text><text x="192" y="248">fev</text>
+      <text x="304" y="248">mar</text><text x="416" y="248">abr</text>
+      <text x="528" y="248">mai</text><text x="640" y="248">jun</text>
+    </g>
+    <polyline points="80,180 192,172 304,150 416,124 528,98 640,72"
+              fill="none" stroke="#C00000" stroke-width="3"/>
+    <polyline points="80,160 192,160 304,160 416,160 528,160 640,160"
+              fill="none" stroke="#595959" stroke-width="2" stroke-dasharray="5 5"/>
+    <text x="648" y="76"  font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#C00000">CAC</text>
+    <text x="648" y="164" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#595959">Meta</text>
+  </svg>
+  <p class="nota">Fonte: Meta Ads + Google Ads, janeiro a junho de 2026.</p>
+</section>
+
+<section class="wrap">
+  <p class="v4-eyebrow">04 // Blocos e cards</p>
+  <hr class="v4-regua">
+  <h2>Cada bloco carrega uma conclusão</h2>
+  <p class="v4-subtitulo">Bloco executivo substitui a lista com marcador.</p>
+
+  <div class="grid-2" style="margin-top:var(--v4-sp-4)">
+    <div class="stack">
+      <div class="v4-bloco">
+        <strong style="text-transform:uppercase">Saturação de público</strong>
+        <div class="v4-eyebrow" style="margin:4px 0">// Fato observado</div>
+        <p style="margin:0">A frequência passou de 4,2 no mesmo público desde março. O custo por
+        resultado acompanha a curva, o que indica esgotamento, não queda de criativo.</p>
+      </div>
+      <div class="v4-bloco">
+        <strong style="text-transform:uppercase">Dependência de um único canal</strong>
+        <div class="v4-eyebrow" style="margin:4px 0">// Hipótese</div>
+        <p style="margin:0">78% da receita paga vem de uma campanha. Qualquer instabilidade nela
+        derruba o mês inteiro.</p>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="v4-card v4-card--destaque">
+        <div class="v4-kpi-valor v4-kpi-valor--tile v4-kpi-valor--destaque" style="font-size:52px">41%</div>
+        <div class="v4-kpi-label">Aquisição</div>
+        <strong>O CAC subiu sem contrapartida de ticket</strong>
+        <p style="margin:8px 0 0">O aumento não foi acompanhado por ganho de valor por cliente,
+        então a margem por venda caiu na mesma proporção.</p>
+      </div>
+      <div class="v4-card v4-card--negativo">
+        <div class="v4-kpi-label">Risco imediato</div>
+        <strong>A meta do trimestre fica inalcançável em 40 dias</strong>
+        <p style="margin:8px 0 0">Mantido o ritmo atual, o orçamento se esgota antes do volume
+        necessário para bater a meta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="v4-eyebrow">05 // Tabela</p>
+  <hr class="v4-regua">
+  <h2>Header preto, linhas alternadas, números à direita</h2>
+
+  <div class="v4-tabela-wrap" style="margin-top:var(--v4-sp-3)">
+  <table class="v4-tabela">
+    <thead><tr><th>Canal</th><th class="num">Investimento</th><th class="num">CAC</th><th class="num">ROAS</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Meta Ads</td><td class="num">R$ 48.200</td><td class="num">R$ 211</td><td class="num">3,4x</td>
+          <td><span class="v4-badge v4-badge--negativo">▼ abaixo</span></td></tr>
+      <tr><td>Google Search</td><td class="num">R$ 22.400</td><td class="num">R$ 132</td><td class="num">6,1x</td>
+          <td><span class="v4-badge v4-badge--positivo">▲ acima</span></td></tr>
+      <tr class="is-destaque"><td>Google PMax</td><td class="num">R$ 9.800</td><td class="num">R$ 298</td><td class="num">1,9x</td>
+          <td><span class="v4-badge v4-badge--negativo">▼ crítico</span></td></tr>
+      <tr><td>LinkedIn Ads</td><td class="num">R$ 3.600</td><td class="num">R$ 176</td><td class="num">4,0x</td>
+          <td><span class="v4-badge v4-badge--neutro">— estável</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="v4-eyebrow">06 // Ações</p>
+  <hr class="v4-regua">
+  <h2>Um CTA primário por tela</h2>
+  <div style="display:flex;gap:var(--v4-sp-2);flex-wrap:wrap;align-items:center;margin-top:var(--v4-sp-3)">
+    <a class="v4-cta" href="#">Aprovar o plano</a>
+    <a href="#" style="display:inline-block;padding:14px 28px;border:2px solid var(--v4-preto);
+       border-radius:4px;color:var(--v4-preto);text-decoration:none;font-weight:700">Ver detalhamento</a>
+    <a href="#" style="color:var(--v4-vermelho);font-weight:700">Baixar o relatório completo</a>
+  </div>
+  <div class="proibido" style="margin-top:var(--v4-sp-4)">
+    <strong style="text-transform:uppercase">Nunca</strong>
+    <p style="margin:8px 0 0">Texto preto sobre preenchimento vermelho mede 2,91:1 e reprova em
+    qualquer tamanho. Sobre o vermelho V4, o texto é sempre branco.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <hr class="v4-regua">
+  <p class="v4-eyebrow">Conclusão estratégica</p>
+  <p style="margin-top:8px">O padrão é o fundo branco. O vermelho marca o que importa, e só isso.
+  Quando tudo está em destaque, nada está.</p>
+</section>
+
+<div class="wrap rodape">
+  <span>Identidade Visual — V4 Company | Carvalho &amp; Co</span>
+  <span>V4 Carvalho &amp; Co</span>
+</div>
+
+</body>
+</html>
