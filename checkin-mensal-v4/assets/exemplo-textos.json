@@ -1,0 +1,23 @@
+{
+  "_ajuda": "Campos de texto que o Claude escreve a partir do pacote de dados. Todo número citado precisa existir no pacote. Separe FATO de HIPÓTESE. Omitir um campo deixa '(preencher)' no slide; omitir uma seção opcional (entregas, organico, plano, pendencias) remove o slide.",
+  "entregas": [
+    { "categoria": "Otimizações", "texto": "Ajustes de verba entre campanhas e pausa de anúncios com custo por resultado acima da média." },
+    { "categoria": "Testes A/B", "texto": "Novos criativos em vídeo testados contra o criativo de melhor desempenho." },
+    { "categoria": "Campanhas", "texto": "Campanhas ativadas ou reorganizadas no período." },
+    { "categoria": "Estratégias", "texto": "Hipóteses implementadas e validadas." },
+    { "categoria": "Entregas", "texto": "Landing pages e automações ativadas." },
+    { "categoria": "Resultados", "texto": "Metas monitoradas e ajustadas ao longo do mês." }
+  ],
+  "motivo_meta": "Fato: ... Interpretação: ...",
+  "aprendizados_funil": "Fato: ... Hipótese: ...",
+  "insights_funil": "Gargalo principal e oportunidade, com número.",
+  "movimentos_mom": "O que variou e por quê (fato) e o que ainda precisa ser validado (hipótese).",
+  "aprendizados_plataforma": { "meta": "Texto sobre Meta Ads.", "google_ads": "Texto sobre Google Ads." },
+  "por_que_criativos": "Padrão de gancho, formato ou oferta (hipótese, se não houver teste).",
+  "organico": { "fonte": "Instagram Insights", "kpis": [ { "rotulo": "Alcance", "valor": "48.200", "sub": "+18% vs. mês ant." } ], "padroes": "..." },
+  "plano": { "escalar": ["..."], "corrigir": ["..."], "testar": ["..."], "prioridade": "Ação de maior impacto esperado." },
+  "pendencias": [ { "item": "Aprovação de criativos", "prazo": "até 10/12", "status": "pendente" } ],
+  "impacto_pendencias": "Como destravar isso muda o resultado.",
+  "slides": { "funil": { "titulo": "Opcional: sobrescreve o título automático", "subtitulo": "", "conclusao": "Conclusão estratégica do slide" } },
+  "conclusoes": { "meta": "Atalho: conclusão por chave de slide (meta, funil, projetado, mom, meta, google_ads, criativos, plano, pendencias)." }
+}
