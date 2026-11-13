@@ -1,0 +1,494 @@
+{
+  "id": "consultaDash01",
+  "name": "Consulta /consulta dash → grupo Alfred",
+  "nodes": [
+    {
+      "id": "q1",
+      "name": "Webhook consulta",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "consulta-dash-0001",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "consulta-dash",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "coInboundTok01",
+          "name": "Central Ops entrada (token do Hermes)"
+        }
+      },
+      "notes": "Quem chama é o fluxo Alfred (nó \"Encaminhar /consulta\"), com o mesmo token do Hermes. Corpo: text, group_jid, message_id. Com \"dry\": true no corpo, monta a resposta mas NÃO envia ao grupo.",
+      "notesInFlow": true
+    },
+    {
+      "id": "q2",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        200,
+        300
+      ],
+      "parameters": {
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "grupoAlfred",
+              "value": "120363431874840042@g.us",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "dashBase",
+              "value": "https://dash-trafego-seven.vercel.app",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "q3",
+      "name": "Interpretar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const W = $('Webhook consulta').first().json;\nconst b = W.body || {};\nconst cfg = $('Config').first().json;\nconst base = { message_id: String(b.message_id || ''), group_jid: String(b.group_jid || ''), dry: b.dry === true };\nconst strip = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();\nconst USO = 'Como usar: */consulta [cliente] [período]*\\nExemplos:\\n• /consulta Alice Salazar outubro\\n• /consulta Official Time mês atual\\n• /consulta VS Med 01/11 a 10/11\\n• /consulta Trufer últimos 7 dias\\n\\nPeríodos: nome do mês (outubro, out/2025), mês atual, mês passado, hoje, ontem, últimos N dias ou DD/MM a DD/MM. Sem período = mês atual até hoje.';\n\nif (base.group_jid !== cfg.grupoAlfred) return [];\nconst linha = String(b.text || '').replace(/\\r/g, '').split('\\n')[0].trim().replace(/^[*_~`\\s]+|[*_~`\\s]+$/g, '');\nconst m = linha.match(/^\\/consulta(?![A-Za-zÀ-ÿ0-9_])[*_~`\\s]*(.*)$/i);\nif (!m) return [];\n\nconst hoje = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(b.now_override ? new Date(b.now_override) : new Date());\nconst [Y, M, D] = hoje.split('-').map(Number);\nconst p2 = n => String(n).padStart(2, '0');\nconst iso = (y, mo, d) => y + '-' + p2(mo) + '-' + p2(d);\nconst addDays = (y, mo, d, n) => { const t = new Date(Date.UTC(y, mo - 1, d + n)); return [t.getUTCFullYear(), t.getUTCMonth() + 1, t.getUTCDate()]; };\nconst lastDay = (y, mo) => new Date(Date.UTC(y, mo, 0)).getUTCDate();\nconst MESES = ['janeiro', 'fevereiro', 'marco', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];\nconst NOMES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];\nconst ABREV = { jan: 1, fev: 2, mar: 3, abr: 4, mai: 5, jun: 6, jul: 7, ago: 8, set: 9, out: 10, nov: 11, dez: 12 };\nconst erro = msg => [{ json: { ...base, acao: 'responder', message: msg } }];\n\nlet rest = strip(m[1]).replace(/\\s+/g, ' ').trim();\nlet per = null, mm;\nconst ano4 = a => (a ? (String(a).length === 2 ? 2000 + Number(a) : Number(a)) : null);\n\nif ((mm = rest.match(/\\b(\\d{1,2})\\/(\\d{1,2})(?:\\/(\\d{2,4}))?\\s*(?:a|ate|ao|-)\\s*(\\d{1,2})\\/(\\d{1,2})(?:\\/(\\d{2,4}))?$/))) {\n  const y2 = ano4(mm[6]) || Y, y1 = ano4(mm[3]) || y2;\n  per = { tipo: 'intervalo', y1, m1: +mm[2], d1: +mm[1], y2, m2: +mm[5], d2: +mm[4] };\n  rest = rest.slice(0, mm.index);\n} else if ((mm = rest.match(/\\b(?:ultimos|ult)\\.?\\s*(\\d{1,3})\\s*dias?$/)) || (mm = rest.match(/\\b(\\d{1,3})\\s*d$/))) {\n  const n = Math.min(Math.max(+mm[1], 1), 365);\n  const [y1, m1, d1] = addDays(Y, M, D, -(n - 1));\n  per = { tipo: 'dias', n, y1, m1, d1, y2: Y, m2: M, d2: D };\n  rest = rest.slice(0, mm.index);\n} else if ((mm = rest.match(/\\bhoje$/))) {\n  per = { tipo: 'dia', rot: 'de hoje', y1: Y, m1: M, d1: D, y2: Y, m2: M, d2: D }; rest = rest.slice(0, mm.index);\n} else if ((mm = rest.match(/\\bontem$/))) {\n  const [y, mo, d] = addDays(Y, M, D, -1);\n  per = { tipo: 'dia', rot: 'de ontem', y1: y, m1: mo, d1: d, y2: y, m2: mo, d2: d }; rest = rest.slice(0, mm.index);\n} else if ((mm = rest.match(/\\b(?:mes atual|este mes|mes corrente|mes passado|mes anterior|ultimo mes)$/))) {\n  const passado = /passado|anterior|ultimo/.test(mm[0]);\n  per = { tipo: 'mes', y: passado ? (M === 1 ? Y - 1 : Y) : Y, mo: passado ? (M === 1 ? 12 : M - 1) : M };\n  rest = rest.slice(0, mm.index);\n} else if ((mm = rest.match(/\\b(janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro|jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)(?:\\s*(?:de|\\/|-)?\\s*(\\d{4}))?$/))) {\n  const mo = MESES.includes(mm[1]) ? MESES.indexOf(mm[1]) + 1 : ABREV[mm[1]];\n  const y = mm[2] ? +mm[2] : (mo > M ? Y - 1 : Y);\n  per = { tipo: 'mes', y, mo };\n  rest = rest.slice(0, mm.index);\n}\nif (!per) per = { tipo: 'mes', y: Y, mo: M };\n\nif (per.tipo === 'mes') {\n  const atual = per.y === Y && per.mo === M;\n  if (per.y > Y || (per.y === Y && per.mo > M)) return erro('Esse mês ainda não começou. Escolha o mês atual ou um anterior.');\n  per.y1 = per.y; per.m1 = per.mo; per.d1 = 1; per.y2 = per.y; per.m2 = per.mo; per.d2 = atual ? D : lastDay(per.y, per.mo);\n  per.parcial = atual; per.nomeMes = NOMES[per.mo - 1] + (per.y !== Y ? ' de ' + per.y : '');\n}\nconst from = iso(per.y1, per.m1, per.d1), to = iso(per.y2, per.m2, per.d2);\nif (from > to) return erro('A data inicial é depois da final. Use *DD/MM a DD/MM*.');\nif (to > hoje) return erro('O período termina no futuro. O dash só tem dados até hoje (' + p2(D) + '/' + p2(M) + ').');\nif (new Date(to) - new Date(from) > 366 * 86400000) return erro('Período muito longo (máximo 1 ano).');\n\nconst dd = (y, mo, d) => p2(d) + '/' + p2(mo);\nlet faixa;\nif (per.y1 === per.y2 && per.m1 === per.m2) faixa = 'de ' + p2(per.d1) + ' a ' + dd(per.y2, per.m2, per.d2);\nelse faixa = 'de ' + dd(per.y1, per.m1, per.d1) + (per.y1 !== per.y2 ? '/' + per.y1 : '') + ' a ' + dd(per.y2, per.m2, per.d2) + (per.y1 !== per.y2 ? '/' + per.y2 : '');\nlet titulo;\nif (per.tipo === 'mes') titulo = 'segue o resultado ' + (per.parcial ? 'parcial ' : '') + 'de ' + per.nomeMes + ', ' + faixa;\nelse if (per.tipo === 'dia') titulo = 'segue o resultado ' + per.rot + ', ' + dd(per.y2, per.m2, per.d2);\nelse if (per.tipo === 'dias') titulo = 'segue o resultado dos últimos ' + per.n + ' dias, ' + faixa;\nelse titulo = 'segue o resultado do período ' + faixa;\n\nconst query = rest.trim().replace(/\\b(de|do|da|em|no|na|para|pro)$/, '').trim();\nif (!query) return erro('Faltou o nome do cliente.\\n\\n' + USO);\nreturn [{ json: { ...base, acao: 'seguir', query, from, to, titulo, parcial: per.tipo === 'mes' ? !!per.parcial : false } }];"
+      }
+    },
+    {
+      "id": "q4",
+      "name": "Seguir?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        600,
+        300
+      ],
+      "parameters": {
+        "options": {},
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "q4c",
+              "leftValue": "={{ $json.acao }}",
+              "rightValue": "seguir",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "q5",
+      "name": "Dash - login",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        800,
+        200
+      ],
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "8bvZAB45LdWLHhAY",
+          "name": "Custom Auth account"
+        }
+      },
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.dashBase }}/api/auth/login",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "q6",
+      "name": "Cookie do dash",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        200
+      ],
+      "parameters": {
+        "jsCode": "const h = $input.first().json.headers || {};\nlet sc = h['set-cookie'];\nif (!sc) throw new Error('O login do dash não devolveu cookie.');\nconst arr = Array.isArray(sc) ? sc : [sc];\nreturn [{ json: { cookie: arr.map(c => c.split(';')[0]).join('; ') } }];"
+      }
+    },
+    {
+      "id": "q7",
+      "name": "Dash - lista de clientes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        200
+      ],
+      "parameters": {
+        "url": "={{ $('Config').first().json.dashBase }}/api/clients",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Cookie",
+              "value": "={{ $json.cookie }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "q8",
+      "name": "Casar cliente",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        200
+      ],
+      "parameters": {
+        "jsCode": "const t = $('Interpretar').first().json;\nconst norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');\nlet dash = $('Dash - lista de clientes').all().map(i => i.json);\nif (dash.length === 1 && Array.isArray(dash[0].clients)) dash = dash[0].clients;\ndash = dash.filter(c => c && c.id && c.name);\nconst q = norm(t.query);\nlet hits = dash.filter(c => norm(c.name) === q);\nif (!hits.length) hits = dash.filter(c => norm(c.name).startsWith(q));\nif (!hits.length && q.length >= 3) hits = dash.filter(c => norm(c.name).includes(q));\nconst resp = message => [{ json: { ...t, acao: 'responder', message } }];\nif (!q) return resp('Faltou o nome do cliente.');\nif (hits.length > 1) return resp('Encontrei mais de um cliente com \"' + t.query + '\":\\n' + hits.slice(0, 8).map(c => '• ' + c.name).join('\\n') + '\\n\\nEscreva o nome completo.');\nif (!hits.length) return resp('Não encontrei \"' + t.query + '\" no dash.\\n\\nClientes disponíveis:\\n' + dash.map(c => c.name).sort((a, b) => a.localeCompare(b, 'pt-BR')).slice(0, 40).map(n => '• ' + n).join('\\n'));\nreturn [{ json: { ...t, acao: 'consultar', dashClientId: hits[0].id, dashNome: hits[0].name } }];"
+      }
+    },
+    {
+      "id": "q9",
+      "name": "Consultar?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1600,
+        200
+      ],
+      "parameters": {
+        "options": {},
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "q9c",
+              "leftValue": "={{ $json.acao }}",
+              "rightValue": "consultar",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "q10",
+      "name": "Dash - relatório",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1800,
+        100
+      ],
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "url": "={{ $('Config').first().json.dashBase }}/api/clients/{{ $json.dashClientId }}/report",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "={{ $json.from }}"
+            },
+            {
+              "name": "to",
+              "value": "={{ $json.to }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Cookie",
+              "value": "={{ $('Cookie do dash').first().json.cookie }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "q11",
+      "name": "Formatar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        100
+      ],
+      "parameters": {
+        "jsCode": "const t = $('Casar cliente').first().json;\nconst r = $input.first().json;\nconst msg = message => [{ json: { ...t, message } }];\nif (!r || !r.client) return msg('Não consegui ler os dados de ' + t.dashNome + ' no dash agora. Tente de novo em alguns minutos.');\nconst fmt = n => { const s = (Math.round((n + Number.EPSILON) * 100) / 100).toFixed(2); const [i, d] = s.split('.'); return i.replace(/\\B(?=(\\d{3})+(?!\\d))/g, '.') + ',' + d; };\nconst brl = n => 'R$ ' + fmt(n);\nconst NOME = { google_ads: 'Google Ads', meta: 'Meta Ads', tiktok: 'TikTok Ads', linkedin: 'LinkedIn Ads', bing: 'Microsoft Ads', pinterest: 'Pinterest Ads', youtube: 'YouTube Ads', amazon: 'Amazon Ads' };\nconst nome = k => NOME[k] || (String(k).replace(/_/g, ' ').replace(/\\b\\w/g, c => c.toUpperCase()));\n\nconst ecom = r.client.businessType === 'ecommerce' || (r.hybrid === true && (r.store || (r.ecom && r.ecom.revenue > 0)));\nlet fat, vendas, funil = null; const porPlat = {};\nif (ecom) {\n  const cs = (r.campaigns || []).filter(c => c.segment === 'ecommerce' && c.stage !== 'reconhecimento');\n  cs.forEach(c => { porPlat[c.platform] = (porPlat[c.platform] || 0) + (c.spend || 0); });\n  const st = r.store, ec = r.ecom || {};\n  vendas = st ? (st.orders || 0) : Math.round(ec.purchases || 0);\n  fat = st ? (st.revenue || 0) : (ec.revenue || 0);\n} else {\n  Object.entries(r.platforms || {}).forEach(([k, p]) => { porPlat[k] = p.spendPerformance || 0; });\n  const f = r.funnel || {};\n  vendas = f.sales || 0; fat = f.revenue || 0;\n  funil = { leads: f.leads || 0, mql: f.mql || 0, sql: f.sql || 0 };\n}\nconst plats = Object.entries(porPlat).filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]);\nconst invest = plats.reduce((a, [, v]) => a + v, 0);\nif (!fat && !invest && !vendas && !(funil && (funil.leads || funil.mql || funil.sql))) return msg('Sem dados de ' + t.dashNome + ' no dash para esse período (' + t.from.split('-').reverse().join('/') + ' a ' + t.to.split('-').reverse().join('/') + ').');\n\nconst roas = fat > 0 && invest > 0 ? fat / invest : 0;\nconst L = ['Pessoal, ' + t.titulo + ' 📊', ''];\nif (fat > 0) L.push('💰 Faturamento: ' + brl(fat));\nif (roas) L.push('📈 ROAS atualizado: ' + fmt(roas) + 'x');\nif (invest > 0) { L.push('💵 Investimento em anúncios: ' + brl(invest)); plats.forEach(([k, v]) => L.push('* ' + nome(k) + ': ' + brl(v))); }\nif (funil && (funil.leads || funil.mql || funil.sql)) {\n  L.push('');\n  if (funil.leads) L.push('👥 Leads: ' + funil.leads + (invest > 0 ? ' (CPL ' + brl(invest / funil.leads) + ')' : ''));\n  if (funil.mql) L.push('🎯 MQLs: ' + funil.mql + (invest > 0 ? ' (custo por MQL ' + brl(invest / funil.mql) + ')' : ''));\n  if (funil.sql) L.push('🤝 SQLs: ' + funil.sql + (invest > 0 ? ' (custo por SQL ' + brl(invest / funil.sql) + ')' : ''));\n}\nif (vendas > 0) { L.push(''); L.push('🛒 Tivemos ' + vendas + (vendas === 1 ? ' venda' : ' vendas') + (t.parcial ? ' até aqui.' : ' no período.')); }\nif (roas) { L.push(''); L.push('Isso significa que, para cada R$ 1,00 investido em anúncios, tivemos aproximadamente R$ ' + fmt(roas) + ' em faturamento.  ⚙️✅'); }\nreturn msg(L.join('\\n'));"
+      }
+    },
+    {
+      "id": "q12",
+      "name": "Enviar?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2200,
+        300
+      ],
+      "parameters": {
+        "options": {},
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "q12c",
+              "leftValue": "={{ $json.dry === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "q13",
+      "name": "Hermes enviar",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2400,
+        200
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "coHermesRply01",
+          "name": "Hermes webhook de retorno"
+        }
+      },
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8644/webhooks/alfred-reply",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Request-ID",
+              "value": "={{ 'co-consulta-' + $json.message_id }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ message: $json.message }) }}",
+        "options": {
+          "timeout": 15000
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook consulta": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Interpretar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Interpretar": {
+      "main": [
+        [
+          {
+            "node": "Seguir?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seguir?": {
+      "main": [
+        [
+          {
+            "node": "Dash - login",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dash - login": {
+      "main": [
+        [
+          {
+            "node": "Cookie do dash",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cookie do dash": {
+      "main": [
+        [
+          {
+            "node": "Dash - lista de clientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dash - lista de clientes": {
+      "main": [
+        [
+          {
+            "node": "Casar cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Casar cliente": {
+      "main": [
+        [
+          {
+            "node": "Consultar?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar?": {
+      "main": [
+        [
+          {
+            "node": "Dash - relatório",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dash - relatório": {
+      "main": [
+        [
+          {
+            "node": "Formatar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatar": {
+      "main": [
+        [
+          {
+            "node": "Enviar?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar?": {
+      "main": [
+        [
+          {
+            "node": "Hermes enviar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo"
+  },
+  "active": false
+}

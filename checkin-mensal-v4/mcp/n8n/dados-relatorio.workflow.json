@@ -1,0 +1,282 @@
+{
+  "id": "dadosRelatorio01",
+  "name": "Dados do relatório (dash + Central) para o MCP",
+  "nodes": [
+    {
+      "id": "d1",
+      "name": "Webhook dados",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "dados-relatorio-0001",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dados-relatorio",
+        "authentication": "headerAuth",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "coInboundTok01",
+          "name": "Central Ops entrada (token do Hermes)"
+        }
+      },
+      "notes": "Chamado pelo MCP do n8n (ferramenta dados_relatorio). Corpo: { cliente, mes? \"AAAA-MM\", from?, to?, prev_from?, prev_to? }. Devolve o pacote de dados do relatório. Só leitura.",
+      "notesInFlow": true
+    },
+    {
+      "id": "d2",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        200,
+        300
+      ],
+      "parameters": {
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "dashBase",
+              "value": "https://dash-trafego-seven.vercel.app",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "squad",
+              "value": "FALCON",
+              "type": "string"
+            },
+            {
+              "id": "a3",
+              "name": "firebaseWebApiKey",
+              "value": "COLE_A_FIREBASE_WEB_API_KEY_DA_CENTRAL",
+              "type": "string"
+            },
+            {
+              "id": "a4",
+              "name": "aliases",
+              "value": "{\"sacrariumhotel\":\"hotelsacrarium\",\"gscseguranca\":\"gsc\"}",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "d3",
+      "name": "Dash - login",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        400,
+        300
+      ],
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "8bvZAB45LdWLHhAY",
+          "name": "Custom Auth account"
+        }
+      },
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.dashBase }}/api/auth/login",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "d4",
+      "name": "Cookie do dash",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const h = $input.first().json.headers || {};\nlet sc = h['set-cookie'];\nif (!sc) throw new Error('O login do dash não devolveu cookie.');\nconst arr = Array.isArray(sc) ? sc : [sc];\nreturn [{ json: { cookie: arr.map(c => c.split(';')[0]).join('; ') } }];"
+      }
+    },
+    {
+      "id": "d5",
+      "name": "Dash - lista de clientes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        800,
+        300
+      ],
+      "parameters": {
+        "url": "={{ $('Config').first().json.dashBase }}/api/clients",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Cookie",
+              "value": "={{ $json.cookie }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "d6",
+      "name": "Central - login",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1000,
+        300
+      ],
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "3hD1yxeCkQOf267e",
+          "name": "Custom Auth account 2"
+        }
+      },
+      "parameters": {
+        "method": "POST",
+        "url": "=https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={{ $('Config').first().json.firebaseWebApiKey }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "options": {}
+      }
+    },
+    {
+      "id": "d7",
+      "name": "Central - ler metas",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        300
+      ],
+      "parameters": {
+        "url": "=https://firestore.googleapis.com/v1/projects/central-v4carvalho/databases/v4-data/documents/squads/{{ $('Config').first().json.squad }}/metas?pageSize=300",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.idToken }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "d8",
+      "name": "Pacote",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const b = ($('Webhook dados').first().json.body) || {};\nconst cfg = $('Config').first().json;\nconst cookie = $('Cookie do dash').first().json.cookie;\nconst norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');\nconst p2 = n => String(n).padStart(2, '0');\nconst erro = (message, extra) => [{ json: { ok: false, erro: message, ...(extra || {}) } }];\n\n// ---------- cliente ----------\nlet dash = $('Dash - lista de clientes').all().map(i => i.json);\nif (dash.length === 1 && Array.isArray(dash[0].clients)) dash = dash[0].clients;\ndash = dash.filter(c => c && c.id && c.name);\nconst q = norm(b.cliente);\nif (!q) return erro('Informe o cliente.', { clientes: dash.map(c => c.name) });\nlet hits = dash.filter(c => norm(c.name) === q || c.slug === String(b.cliente).trim());\nif (!hits.length) hits = dash.filter(c => norm(c.name).startsWith(q));\nif (!hits.length && q.length >= 3) hits = dash.filter(c => norm(c.name).includes(q));\nif (hits.length !== 1) return erro(hits.length ? 'Mais de um cliente com esse nome: ' + hits.map(h => h.name).join(', ') : 'Cliente não encontrado no dash.', { clientes: dash.map(c => c.name) });\nconst cli = hits[0];\n\n// ---------- períodos ----------\nconst hoje = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(new Date());\nconst [Y, M, D] = hoje.split('-').map(Number);\nconst iso = (y, m, d) => y + '-' + p2(m) + '-' + p2(d);\nconst lastDay = (y, m) => new Date(Date.UTC(y, m, 0)).getUTCDate();\nconst addDays = (s, n) => { const [y, m, d] = s.split('-').map(Number); const t = new Date(Date.UTC(y, m - 1, d + n)); return iso(t.getUTCFullYear(), t.getUTCMonth() + 1, t.getUTCDate()); };\nconst diffDays = (a, c) => Math.round((Date.UTC(...c.split('-').map((x, i) => i === 1 ? x - 1 : +x)) - Date.UTC(...a.split('-').map((x, i) => i === 1 ? x - 1 : +x))) / 86400000);\nlet from, to, prevFrom, prevTo, mes;\nconst re = /^\\d{4}-\\d{2}-\\d{2}$/;\nif (b.from && b.to) {\n  if (!re.test(b.from) || !re.test(b.to)) return erro('from/to devem ser AAAA-MM-DD.');\n  from = b.from; to = b.to; mes = from.slice(0, 7);\n  const n = diffDays(from, to) + 1;\n  prevTo = b.prev_to || addDays(from, -1); prevFrom = b.prev_from || addDays(prevTo, -(n - 1));\n} else {\n  mes = b.mes || (Y + '-' + p2(M));\n  if (!/^\\d{4}-\\d{2}$/.test(mes)) return erro('mes deve ser AAAA-MM.');\n  const [y, m] = mes.split('-').map(Number);\n  from = iso(y, m, 1); to = (y === Y && m === M) ? hoje : iso(y, m, lastDay(y, m));\n  const py = m === 1 ? y - 1 : y, pm = m === 1 ? 12 : m - 1;\n  prevFrom = iso(py, pm, 1); prevTo = iso(py, pm, lastDay(py, pm));\n}\nif (to > hoje) return erro('O período termina no futuro.');\nconst parcial = to >= hoje;\n\n// ---------- coleta ----------\nconst avisos = [];\nconst base = cfg.dashBase + '/api/clients/' + cli.id;\nconst get = async (path, nome) => {\n  try { return await this.helpers.httpRequest({ method: 'GET', url: base + path, headers: { Cookie: cookie }, json: true, timeout: 30000 }); }\n  catch (e) { avisos.push('Falha ao ler ' + nome + ' do dash: ' + (e.message || e)); return null; }\n};\nconst [rep, repPrev, ads, leads, site, docEst, docFca] = await Promise.all([\n  get('/report?from=' + from + '&to=' + to, 'relatório'),\n  get('/report?from=' + prevFrom + '&to=' + prevTo, 'relatório do período anterior'),\n  get('/ads?from=' + from + '&to=' + to, 'anúncios'),\n  get('/leads?from=' + from + '&to=' + to, 'leads'),\n  get('/site?from=' + from + '&to=' + to, 'site/GA4/Clarity'),\n  get('/docs?kind=estrategia', 'estratégia'),\n  get('/docs?kind=relatorio_fca', 'relatórios FCA'),\n]);\nif (!rep || !rep.client) return erro('O dash não devolveu o relatório deste cliente.', { avisos });\n\n// ---------- KPIs ----------\nconst div = (a, c) => (c ? a / c : null);\nconst rd = n => (n == null || !Number.isFinite(n) ? null : Math.round((n + Number.EPSILON) * 100) / 100);\nfunction kpis(r) {\n  if (!r || !r.client) return null;\n  const ecom = r.client.businessType === 'ecommerce' || (r.hybrid === true && (r.store || (r.ecom && r.ecom.revenue > 0)));\n  const plats = r.platforms || {};\n  const porPlataforma = {};\n  let invest = 0, vendas, fat;\n  if (ecom) {\n    (r.campaigns || []).filter(c => c.segment === 'ecommerce' && c.stage !== 'reconhecimento').forEach(c => { porPlataforma[c.platform] = (porPlataforma[c.platform] || 0) + (c.spend || 0); });\n    const st = r.store, ec = r.ecom || {};\n    vendas = st ? (st.orders || 0) : Math.round(ec.purchases || 0); fat = st ? (st.revenue || 0) : (ec.revenue || 0);\n  } else {\n    Object.entries(plats).forEach(([k, p]) => { porPlataforma[k] = p.spendPerformance || 0; });\n    vendas = (r.funnel || {}).sales || 0; fat = (r.funnel || {}).revenue || 0;\n  }\n  invest = Object.values(porPlataforma).reduce((a, v) => a + v, 0);\n  const f = r.funnel || {};\n  const imp = Object.values(plats).reduce((a, p) => a + (p.impressions || 0), 0);\n  const cli_ = Object.values(plats).reduce((a, p) => a + (p.clicks || 0), 0);\n  const gasto = Object.values(plats).reduce((a, p) => a + (p.spend || 0), 0);\n  const g = r.ga4 || {};\n  return {\n    modelo: ecom ? 'ecommerce' : 'inside_sales',\n    investimento_performance: rd(invest), investimento_total: rd(gasto),\n    investimento_por_plataforma: Object.fromEntries(Object.entries(porPlataforma).map(([k, v]) => [k, rd(v)])),\n    faturamento: rd(fat), vendas, ticket_medio: rd(div(fat, vendas)), roas: rd(div(fat, invest)),\n    impressoes: imp, cliques: cli_, ctr_pct: rd(div(cli_, imp) * 100), cpc: rd(div(gasto, cli_)), cpm: rd(div(gasto, imp) * 1000),\n    leads: f.leads || 0, mql: f.mql || 0, sql: f.sql || 0,\n    cpl: rd(div(invest, f.leads)), custo_mql: rd(div(invest, f.mql)), custo_sql: rd(div(invest, f.sql)), custo_venda: rd(div(invest, vendas)),\n    tx_lead_mql_pct: rd(div(f.mql, f.leads) * 100), tx_mql_sql_pct: rd(div(f.sql, f.mql) * 100), tx_sql_venda_pct: rd(div(vendas, f.sql) * 100),\n    sessoes_ga4: g.sessions || 0, add_to_cart: g.addToCart || 0,\n  };\n}\nconst k = kpis(rep), kp = kpis(repPrev);\nconst delta = (a, c) => (a == null || c == null || c === 0 ? null : rd((a - c) / c * 100));\nconst variacao = k && kp ? Object.fromEntries(['investimento_performance', 'faturamento', 'vendas', 'roas', 'leads', 'mql', 'sql', 'cpl', 'ticket_medio'].map(x => [x, delta(k[x], kp[x])])) : null;\n\n// ---------- meta da Central ----------\nconst fv = v => { if (v == null) return null; if ('doubleValue' in v) return v.doubleValue; if ('integerValue' in v) return Number(v.integerValue); if ('stringValue' in v) return v.stringValue; if ('nullValue' in v) return null; if ('mapValue' in v) return Object.fromEntries(Object.entries(v.mapValue.fields || {}).map(([a, c]) => [a, fv(c)])); return null; };\nconst alias = JSON.parse(cfg.aliases || '{}');\nconst docs = ($('Central - ler metas').first().json.documents) || [];\nlet meta = null;\nfor (const d of docs) {\n  const f = d.fields || {}; const nm = norm(fv(f.cliente)); const alvo = alias[nm] || nm; const nd = norm(cli.name);\n  if (String(fv(f.mes) || '') === mes && (alvo === nd || (nd.length >= 4 && alvo.startsWith(nd)) || (alvo.length >= 4 && nd.startsWith(alvo)))) {\n    meta = { cliente_central: fv(f.cliente), mes, modelo: fv(f.modelo), provavel: fv(f.provavel), otimista: fv(f.otimista), pessimista: fv(f.pessimista), realizado: fv(f.realizado) };\n    break;\n  }\n}\nif (meta && meta.realizado && meta.realizado.faturamento && k && k.faturamento && Math.abs(meta.realizado.faturamento - k.faturamento) / k.faturamento > 0.1) avisos.push('Faturamento divergente: o dash mostra ' + k.faturamento + ' e o \"realizado\" da Central tem ' + meta.realizado.faturamento + '. Concilie as fontes antes de apresentar ao cliente.');\nif (!meta) avisos.push('Sem meta cadastrada na Central para ' + mes + '. Não é possível mostrar atingimento da meta.');\n\n// ---------- blocos resumidos ----------\nconst adsLista = ((ads && ads.ads) || []).map(a => ({\n  nome: a.name, plataforma: a.platform, status: a.status, campanha: a.campaign_name, conjunto: a.adset_name,\n  formato: a.creative && a.creative.format, titulo: a.creative && a.creative.title, texto: a.creative && a.creative.body ? String(a.creative.body).slice(0, 280) : null,\n  miniatura: a.creative && a.creative.thumbnail_url, previa: a.creative && a.creative.preview_url,\n  gasto: rd(a.metrics && a.metrics.spend), impressoes: a.metrics && a.metrics.impressions, cliques: a.metrics && a.metrics.link_clicks,\n  ctr_pct: rd(a.metrics && a.metrics.ctr), cpc: rd(a.metrics && a.metrics.cpc), resultados: a.metrics && a.metrics.results, custo_por_resultado: rd(a.metrics && a.metrics.cost_per_result),\n})).sort((x, y) => (y.gasto || 0) - (x.gasto || 0));\nconst campanhas = (rep.campaigns || []).map(c => ({ plataforma: c.platform, nome: c.name, etapa: c.stage, segmento: c.segment, status: c.status, objetivo: c.objective,\n  gasto: rd(c.spend), impressoes: c.impressions, cliques: c.clicks, leads_rastreados: c.trackedLeads, conversas: c.conversations, compras: c.purchases, valor_conversao: rd(c.conversionValue),\n  ctr_pct: rd(div(c.clicks, c.impressions) * 100), cpc: rd(div(c.spend, c.clicks)), custo_por_lead: rd(div(c.spend, c.trackedLeads)) })).sort((x, y) => (y.gasto || 0) - (x.gasto || 0));\nconst L = (leads && leads.leads) || [];\nconst porCanal = {};\nL.forEach(l => { const c = l.channel || 'nao_informado'; const o = porCanal[c] = porCanal[c] || { leads: 0, mql: 0, sql: 0, vendas: 0, faturamento: 0 }; o.leads++; if (l.is_mql) o.mql++; if (l.is_sql) o.sql++; if (l.is_sale) { o.vendas++; o.faturamento += l.sale_value || 0; } });\nconst porOrigem = {};\nL.forEach(l => { const s = l.source_detail || 'não informado'; porOrigem[s] = (porOrigem[s] || 0) + 1; });\nconst funilLeads = { total: L.length, por_canal: porCanal, origens_top: Object.entries(porOrigem).sort((x, y) => y[1] - x[1]).slice(0, 8).map(([origem, qtd]) => ({ origem, qtd })) };\nconst clar = (site && site.clarity) || {};\nconst dias = clar.days || [];\nconst siteRes = site ? {\n  origens: (site.sources || []).slice(0, 10), paginas: (site.pages || []).slice(0, 10),\n  clarity: { configurado: !!clar.configured, sessoes: dias.reduce((a, d) => a + (d.sessions || 0), 0), dias_com_retrato: dias.length },\n} : null;\nconst fcaData = (docFca && docFca.data) || null;\nlet fcaUltimo = null;\nif (fcaData) { const ks = Object.keys(fcaData).sort(); const kk = ks[ks.length - 1]; fcaUltimo = kk ? { periodo: kk, ...fcaData[kk] } : null; }\n\n// ---------- avisos de qualidade ----------\nif (k && k.leads === 0 && k.modelo === 'inside_sales') avisos.push('Funil zerado no dash (sem leads na planilha neste período): não use taxas de funil.');\nif (rep.hasSheet === false && k && k.modelo === 'inside_sales') avisos.push('Cliente sem planilha de leads vinculada.');\nif (!adsLista.length) avisos.push('Nenhum anúncio com impressão no período: slide de criativos deve ficar de fora ou ser marcado como sem dado.');\nif (siteRes && !siteRes.origens.length && !(rep.ga4 && rep.ga4.sessions)) avisos.push('GA4 não vinculado ou sem dados: não há dados de site/sessões.');\nif (siteRes && siteRes.clarity.sessoes === 0) avisos.push('Clarity sem sessões no período.');\nif (rep.lastSync && (Date.now() - new Date(rep.lastSync).getTime()) > 36 * 3600 * 1000) avisos.push('Última sincronização do dash tem mais de 36 horas: números podem estar defasados.');\nif (parcial) avisos.push('Período parcial (até ' + to + '): rotule como \"resultado parcial\".');\nif (k && kp && kp.investimento_performance === 0 && kp.leads === 0 && kp.vendas === 0) avisos.push('Período anterior sem dados: comparação mês a mês indisponível.');\navisos.push('Redes sociais/orgânico: o dash não fornece esse bloco; preencha manualmente ou omita o slide.');\n\nreturn [{ json: {\n  ok: true,\n  cliente: { nome: cli.name, slug: cli.slug, tipo: cli.businessType, verba_mensal: cli.monthlyBudget, ticket_referencia: cli.ticket },\n  periodo: { de: from, ate: to, parcial, mes }, periodo_anterior: { de: prevFrom, ate: prevTo },\n  ultima_sincronizacao: rep.lastSync || null,\n  kpis: k, kpis_anterior: kp, variacao_pct: variacao,\n  meta_central: meta, metas_dash: rep.goals || [],\n  canais_funil: rep.byChannel || null, plataformas: rep.platforms || null,\n  campanhas, anuncios: adsLista, leads_resumo: funilLeads,\n  serie_diaria: (rep.daily || []).map(d => ({ data: d.date, gasto: rd(d.spend), leads: d.leads, mql: d.mql, sql: d.sql, vendas: d.sales, faturamento: rd(d.revenue), sessoes: d.sessions })),\n  site: siteRes, ultimo_relatorio_fca: fcaUltimo, estrategia: docEst && docEst.data ? docEst.data : null,\n  avisos,\n} }];"
+      }
+    }
+  ],
+  "connections": {
+    "Webhook dados": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Dash - login",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dash - login": {
+      "main": [
+        [
+          {
+            "node": "Cookie do dash",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cookie do dash": {
+      "main": [
+        [
+          {
+            "node": "Dash - lista de clientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dash - lista de clientes": {
+      "main": [
+        [
+          {
+            "node": "Central - login",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Central - login": {
+      "main": [
+        [
+          {
+            "node": "Central - ler metas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Central - ler metas": {
+      "main": [
+        [
+          {
+            "node": "Pacote",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo"
+  },
+  "active": false
+}

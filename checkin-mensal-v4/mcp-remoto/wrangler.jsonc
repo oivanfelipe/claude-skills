@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mcp",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  // Tokens por pessoa (guardados como hash SHA-256). Criado com: wrangler kv namespace create TOKENS
+  "kv_namespaces": [{ "binding": "TOKENS", "id": "0d1e96e5c9644070b1ebbd9fed6d90e9" }],
+  // Aponta só para 127.0.0.1:5678 da VPS, pelo túnel vps-ivan. Criado com:
+  // wrangler vpc service create n8n-dados --type http --tunnel-id <ID_DO_TUNEL> --ipv4 127.0.0.1 --http-port 5678
+  "vpc_services": [{ "binding": "N8N", "service_id": "01a1d270-c2fe-7ff0-a3e1-f6c450bbb232" }]
+}
